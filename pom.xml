@@ -7,13 +7,16 @@
     <!-- Project Info -->
     <groupId>by.parceldelivery</groupId>
     <artifactId>parceldelivery-core</artifactId>
-    <version>0.0.1</version>
+    <name>Parcels Delivery</name>
+    <version>0.0.2</version>
     <packaging>war</packaging>
 
     <!-- Shared version number properties -->
     <properties>
-        <org.springframework.version>5.0.2.RELEASE</org.springframework.version>
-        <org.slf4j.version>1.7.25</org.slf4j.version>
+        <java.version>1.9</java.version>
+        <spring.version>5.0.3.RELEASE</spring.version>
+        <hibernate.version>5.2.12.Final</hibernate.version>
+        <mysql-connector.version>6.0.6</mysql-connector.version>
     </properties>
 
     <dependencies>
@@ -22,20 +25,39 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
-            <version>${org.springframework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
-            <version>${org.springframework.version}</version>
+            <version>${spring.version}</version>
         </dependency>
 
-        <!-- Simple Logger for Java -->
         <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-api</artifactId>
-            <version>${org.slf4j.version}</version>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
+        <!-- Hibernate -->
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-entitymanager</artifactId>
+            <version>${hibernate.version}</version>
+        </dependency>
+
+        <!-- MySQL Connector -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
         </dependency>
 
         <!-- Servlet -->
@@ -55,12 +77,25 @@
 
     <build>
         <plugins>
+            <!-- Maven Plugins-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.7.0</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <showDeprecation>true</showDeprecation>
+                    <showWarnings>true</showWarnings>
+                </configuration>
+            </plugin>
+
+            <!-- Run project in Jetty Container -->
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>9.4.8.v20171121</version>
                 <configuration>
-                    <scanIntervalSeconds>5</scanIntervalSeconds>
                     <httpConnector>
                         <port>8080</port>
                     </httpConnector>
