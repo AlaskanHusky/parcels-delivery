@@ -1,3 +1,10 @@
+# IDEA Project Settings
+.idea/
+*.iml
+
+#Build
+target/
+
 # Compiled class file
 *.class
 
