@@ -1,4 +1,4 @@
-package by.parceldelivery.controllers;
+package by.parceldelivery.controller;
 
 import java.text.DateFormat;
 import java.util.Date;
