@@ -66,4 +66,8 @@
         <property name="parcelDAO" ref="parcelDAO"/>
     </bean>
 
+    <bean id="pointService" class="by.parcelsdelivery.service.impl.PointServiceImpl">
+        <property name="pointDAO" ref="pointDAO"/>
+    </bean>
+
 </beans>

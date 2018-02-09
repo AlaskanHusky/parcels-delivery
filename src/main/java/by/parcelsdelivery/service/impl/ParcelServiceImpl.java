@@ -1,43 +1,51 @@
-package by.parcelsdelivery.service;
+package by.parcelsdelivery.service.impl;
 
-import by.parcelsdelivery.entity.ParcelEntity;
 import by.parcelsdelivery.dao.ParcelDAO;
+import by.parcelsdelivery.entity.ParcelEntity;
+import by.parcelsdelivery.service.ParcelService;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 public class ParcelServiceImpl implements ParcelService {
 
-    @Autowired
-    private ParcelDAO prclDAO;
+    private ParcelDAO parcelDAO;
 
-    @Override
-    public void addParcel(ParcelEntity prcl) {
-        prclDAO.addParcel(prcl);
+    public ParcelServiceImpl() {
+        System.out.println("ParcelServiceImpl Constructor");
     }
 
     @Override
-    public List<ParcelEntity> getAllParcels() {
-        return prclDAO.getAllParcels();
+    public int createParcel(ParcelEntity parcel) {
+        return parcelDAO.createParcel(parcel);
+    }
+
+    @Override
+    public ParcelEntity updateParcel(ParcelEntity parcel) {
+        return parcelDAO.updateParcel(parcel);
     }
 
     @Override
     public void deleteParcel(int parcelId) {
-        prclDAO.deleteParcel(parcelId);
+        parcelDAO.deleteParcel(parcelId);
     }
 
-    public ParcelEntity getParcel(int parcelID) {
-        return prclDAO.getParcel(parcelID);
+    @Override
+    public List<ParcelEntity> getAllParcels() {
+        return parcelDAO.getAllParcels();
     }
 
-    public ParcelEntity updateParcel(ParcelEntity prcl) {
-        // TODO Auto-generated method stub
-        return prclDAO.updateParcel(prcl);
+    @Override
+    public ParcelEntity getParcel(int parcelId) {
+        return parcelDAO.getParcel(parcelId);
+    }
+
+    public void setParcelDAO(ParcelDAO parcelDAO) {
+        this.parcelDAO = parcelDAO;
     }
 
 }

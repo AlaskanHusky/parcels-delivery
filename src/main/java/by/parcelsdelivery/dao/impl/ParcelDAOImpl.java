@@ -14,7 +14,7 @@ public class ParcelDAOImpl implements ParcelDAO {
     private HibernateUtil hibernateUtil;
 
     public ParcelDAOImpl() {
-        System.out.println("ParcelDAOImpl");
+        System.out.println("ParcelDAOImpl Constructor");
     }
 
     @Override

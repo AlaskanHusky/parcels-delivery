@@ -1,19 +1,15 @@
 package by.parcelsdelivery.service;
 
-import by.parcelsdelivery.model.Parcel;
+import by.parcelsdelivery.entity.ParcelEntity;
 
 import java.util.List;
 
 public interface ParcelService {
 
-    public void addParcel(Parcel p);
-
-    public Parcel getParcel(int parcelId);
-
-    public List<Parcel> getAllParcels();
-
+    public int createParcel(ParcelEntity parcel);
+    public ParcelEntity updateParcel(ParcelEntity parcel);
     public void deleteParcel(int parcelId);
-
-    public Parcel updateParcel(Parcel p);
+    public List<ParcelEntity> getAllParcels();
+    public ParcelEntity getParcel(int parcelId);
 
 }

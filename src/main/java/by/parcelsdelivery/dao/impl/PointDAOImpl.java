@@ -14,7 +14,7 @@ public class PointDAOImpl implements PointDAO {
     private HibernateUtil hibernateUtil;
 
     public PointDAOImpl() {
-        System.out.println("PointDAOImpl");
+        System.out.println("PointDAOImpl Constructor");
     }
 
     @Override
