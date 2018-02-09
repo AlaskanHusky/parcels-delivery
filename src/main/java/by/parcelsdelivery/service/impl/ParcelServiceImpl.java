@@ -1,6 +1,6 @@
 package by.parcelsdelivery.service;
 
-import by.parcelsdelivery.model.Parcel;
+import by.parcelsdelivery.entity.ParcelEntity;
 import by.parcelsdelivery.dao.ParcelDAO;
 
 import java.util.List;
@@ -17,12 +17,12 @@ public class ParcelServiceImpl implements ParcelService {
     private ParcelDAO prclDAO;
 
     @Override
-    public void addParcel(Parcel prcl) {
+    public void addParcel(ParcelEntity prcl) {
         prclDAO.addParcel(prcl);
     }
 
     @Override
-    public List<Parcel> getAllParcels() {
+    public List<ParcelEntity> getAllParcels() {
         return prclDAO.getAllParcels();
     }
 
@@ -31,11 +31,11 @@ public class ParcelServiceImpl implements ParcelService {
         prclDAO.deleteParcel(parcelId);
     }
 
-    public Parcel getParcel(int parcelID) {
+    public ParcelEntity getParcel(int parcelID) {
         return prclDAO.getParcel(parcelID);
     }
 
-    public Parcel updateParcel(Parcel prcl) {
+    public ParcelEntity updateParcel(ParcelEntity prcl) {
         // TODO Auto-generated method stub
         return prclDAO.updateParcel(prcl);
     }

@@ -1,19 +1,15 @@
 package by.parcelsdelivery.dao;
 
-import by.parcelsdelivery.model.Parcel;
-
 import java.util.List;
+
+import by.parcelsdelivery.entity.ParcelEntity;
 
 public interface ParcelDAO {
 
-    public void addParcel(Parcel p);
-
-    public Parcel getParcel(int parcelId);
-
-    public List<Parcel> getAllParcels();
-
+    public int createParcel(ParcelEntity parcel);
+    public ParcelEntity updateParcel(ParcelEntity parcel);
     public void deleteParcel(int parcelId);
-
-    public Parcel updateParcel(Parcel p);
+    public List<ParcelEntity> getAllParcels();
+    public ParcelEntity getParcel(int parcelId);
 
 }
