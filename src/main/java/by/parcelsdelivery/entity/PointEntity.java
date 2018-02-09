@@ -1,4 +1,4 @@
-package by.parcelsdelivery.model;
+package by.parcelsdelivery.entity;
 
 import java.io.Serializable;
 
@@ -7,21 +7,20 @@ import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "point")
-public class Point implements Serializable {
+public class PointEntity implements Serializable {
 
     @Id
-    @Column(name = "point_id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "point_id")
+    @GeneratedValue
     private int id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private boolean status;
 
     public int getId() {
