@@ -20,13 +20,13 @@ public class ParcelServiceImpl implements ParcelService {
     }
 
     @Override
-    public int createParcel(ParcelEntity parcel) {
-        return parcelDAO.createParcel(parcel);
+    public void createParcel(ParcelEntity parcel) {
+        parcelDAO.createParcel(parcel);
     }
 
     @Override
-    public ParcelEntity updateParcel(ParcelEntity parcel) {
-        return parcelDAO.updateParcel(parcel);
+    public void updateParcel(ParcelEntity parcel) {
+        parcelDAO.updateParcel(parcel);
     }
 
     @Override

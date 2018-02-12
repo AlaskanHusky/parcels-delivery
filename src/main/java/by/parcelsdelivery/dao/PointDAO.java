@@ -6,10 +6,10 @@ import by.parcelsdelivery.entity.PointEntity;
 
 public interface PointDAO {
 
-    public int createPoint(PointEntity point);
-    public PointEntity updatePoint(PointEntity point);
-    public void deletePoint(int pointId);
-    public List<PointEntity> getAllPoints();
-    public PointEntity getPoint(int pointId);
+    void createPoint(PointEntity point);
+    void updatePoint(PointEntity point);
+    void deletePoint(int pointId);
+    List<PointEntity> getAllPoints();
+    PointEntity getPoint(int pointId);
 
 }

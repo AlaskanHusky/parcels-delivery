@@ -1,37 +1,25 @@
 package by.parcelsdelivery.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "parcel")
-public class ParcelEntity implements Serializable {
+public class ParcelEntity {
+
+    private int id;
+    private String sender;
+    private String message;
+    private int[] path;
+    public enum status {DELIVERED, TRANSIT, ON_NEXT_POINT}
 
     @Id
     @Column(name = "parcel_id")
-    @GeneratedValue
-    private int id;
-
-    @Column(name = "sender")
-    private String sender;
-
-    @Column(name = "text")
-    private String text;
-
-    @Column(name = "start_point")
-    private String startPoint;
-
-    @Column(name = "end_point")
-    private String endPoint;
-
-    @Column(name = "status")
-    private String status;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -40,6 +28,7 @@ public class ParcelEntity implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "sender")
     public String getSender() {
         return sender;
     }
@@ -48,35 +37,22 @@ public class ParcelEntity implements Serializable {
         this.sender = sender;
     }
 
-    public String getText() {
-        return text;
+    @Column(name = "message")
+    public String getMessage() {
+        return message;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setMessage(String message) {
+        this.message = message;
     }
 
-    public String getStartPoint() {
-        return startPoint;
+    @Column(name = "path")
+    public int[] getPath() {
+        return path;
     }
 
-    public void setStartPoint(String startPoint) {
-        this.startPoint = startPoint;
+    public void setPath(int[] path) {
+        this.path = path;
     }
 
-    public String getEndPoint() {
-        return endPoint;
-    }
-
-    public void setEndPoint(String endPoint) {
-        this.endPoint = endPoint;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 }

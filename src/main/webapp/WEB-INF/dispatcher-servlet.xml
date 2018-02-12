@@ -70,4 +70,9 @@
         <property name="pointDAO" ref="pointDAO"/>
     </bean>
 
+    <!-- Controller's beans -->
+    <bean id="pointController" class="by.parcelsdelivery.controller.PointController">
+        <property name="pointService" ref="pointService"/>
+    </bean>
+
 </beans>

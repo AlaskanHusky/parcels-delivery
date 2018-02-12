@@ -18,20 +18,18 @@ public class PointDAOImpl implements PointDAO {
     }
 
     @Override
-    public int createPoint(PointEntity point) {
-        return (int) hibernateUtil.create(point);
+    public void createPoint(PointEntity point) {
+        hibernateUtil.create(point);
     }
 
     @Override
-    public PointEntity updatePoint(PointEntity point) {
-        return hibernateUtil.update(point);
+    public void updatePoint(PointEntity point) {
+        hibernateUtil.update(point);
     }
 
     @Override
     public void deletePoint(int pointId) {
-        PointEntity point = new PointEntity();
-        point.setId(pointId);
-        hibernateUtil.delete(point);
+        hibernateUtil.delete(pointId, PointEntity.class);
     }
 
     @Override

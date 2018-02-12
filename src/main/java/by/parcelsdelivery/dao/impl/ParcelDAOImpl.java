@@ -18,20 +18,18 @@ public class ParcelDAOImpl implements ParcelDAO {
     }
 
     @Override
-    public int createParcel(ParcelEntity parcel) {
-        return (int) hibernateUtil.create(parcel);
+    public void createParcel(ParcelEntity parcel) {
+        hibernateUtil.create(parcel);
     }
 
     @Override
-    public ParcelEntity updateParcel(ParcelEntity parcel) {
-        return hibernateUtil.update(parcel);
+    public void updateParcel(ParcelEntity parcel) {
+        hibernateUtil.update(parcel);
     }
 
     @Override
-    public void deleteParcel(int parcelId) {
-        ParcelEntity parcel = new ParcelEntity();
-        parcel.setId(parcelId);
-        hibernateUtil.delete(parcel);
+    public void deleteParcel(int id) {
+        hibernateUtil.delete(id, ParcelEntity.class);
     }
 
     @Override

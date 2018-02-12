@@ -20,13 +20,13 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
-    public int createPoint(PointEntity point) {
-        return pointDAO.createPoint(point);
+    public void createPoint(PointEntity point) {
+        pointDAO.createPoint(point);
     }
 
     @Override
-    public PointEntity updatePoint(PointEntity point) {
-        return pointDAO.updatePoint(point);
+    public void updatePoint(PointEntity point) {
+        pointDAO.updatePoint(point);
     }
 
     @Override

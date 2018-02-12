@@ -6,10 +6,10 @@ import java.util.List;
 
 public interface ParcelService {
 
-    public int createParcel(ParcelEntity parcel);
-    public ParcelEntity updateParcel(ParcelEntity parcel);
-    public void deleteParcel(int parcelId);
-    public List<ParcelEntity> getAllParcels();
-    public ParcelEntity getParcel(int parcelId);
+    void createParcel(ParcelEntity parcel);
+    void updateParcel(ParcelEntity parcel);
+    void deleteParcel(int parcelId);
+    List<ParcelEntity> getAllParcels();
+    ParcelEntity getParcel(int parcelId);
 
 }

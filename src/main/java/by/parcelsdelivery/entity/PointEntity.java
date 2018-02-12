@@ -1,28 +1,24 @@
 package by.parcelsdelivery.entity;
 
-import java.io.Serializable;
-
 import javax.persistence.Entity;
 import javax.persistence.Table;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 
 @Entity
 @Table(name = "point")
-public class PointEntity implements Serializable {
+public class PointEntity {
+
+    private int id;
+    private String name;
+    private int pointNumber;
+    private String uri;
 
     @Id
     @Column(name = "point_id")
-    @GeneratedValue
-    private int id;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "status")
-    private boolean status;
-
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int getId() {
         return id;
     }
@@ -31,6 +27,7 @@ public class PointEntity implements Serializable {
         this.id = id;
     }
 
+    @Column(name = "name")
     public String getName() {
         return name;
     }
@@ -39,11 +36,21 @@ public class PointEntity implements Serializable {
         this.name = name;
     }
 
-    public boolean isStatus() {
-        return status;
+    @Column(name = "point_number")
+    public int getPointNumber() {
+        return pointNumber;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public void setPointNumber(int pointNumber) {
+        this.pointNumber = pointNumber;
+    }
+
+    @Column(name = "uri")
+    public String getUri() {
+        return uri;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
     }
 }
