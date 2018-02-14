@@ -6,7 +6,10 @@
     <title>Points</title>
 </head>
 <body>
-<h1> Add a Point</h1>
+
+<%@ include file='header.jsp' %>
+
+<h1> Add or Update a Point</h1>
 
 <c:url var="addAction" value="/points/add"/>
 

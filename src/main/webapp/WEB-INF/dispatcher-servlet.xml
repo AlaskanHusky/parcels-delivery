@@ -15,6 +15,9 @@
     <!-- Getting Database properties -->
     <context:property-placeholder location="classpath:database.properties"/>
 
+    <!-- Specifying the Resource location to load JS, CSS, Images etc -->
+    <mvc:resources mapping="/resources/**" location="/resources/" />
+
     <!-- Enables the Spring MVC @Controller programming entity -->
     <mvc:annotation-driven/>
 
@@ -76,6 +79,10 @@
     </bean>
 
     <bean id="parcelController" class="by.parcelsdelivery.controller.ParcelController">
+        <property name="parcelService" ref="parcelService"/>
+    </bean>
+
+    <bean id="mainController" class="by.parcelsdelivery.controller.MainController">
         <property name="parcelService" ref="parcelService"/>
     </bean>
 

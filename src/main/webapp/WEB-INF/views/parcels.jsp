@@ -6,7 +6,10 @@
     <title>Parcels</title>
 </head>
 <body>
-<h1> Add a Parcel</h1>
+
+<%@ include file='header.jsp' %>
+
+<h1> Add or Update a Parcel</h1>
 
 <c:url var="addAction" value="/parcels/add"/>
 
