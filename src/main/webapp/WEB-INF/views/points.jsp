@@ -1,6 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"  %>
-<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -9,67 +8,86 @@
 <body>
 <h1> Add a Point</h1>
 
-<c:url var="addAction" value="/point/add" />
+<c:url var="addAction" value="/points/add"/>
 
-<form:form action="${addAction}" modelAttribute="point">
+<form:form method="post" action="${addAction}" modelAttribute="point">
     <table>
         <tr>
             <td>
+                <form:input path="id" type="hidden"/>
+            </td>
+        </tr>
+        <tr>
+            <td>
                 <form:label path="name">
-                    <spring:message text="Name"/>
+                    Name
                 </form:label>
             </td>
             <td>
-                <form:input path="name" />
+                <form:input path="name" type="text" maxlength="5" placeholder="Input point name"/>
             </td>
         </tr>
         <tr>
             <td>
                 <form:label path="pointNumber">
-                    <spring:message text="Point Number"/>
+                    Point's number
                 </form:label>
             </td>
             <td>
-                <form:input path="pointNumber" />
+                <form:input path="pointNumber" type="text" placeholder="Input point's number"/>
             </td>
         </tr>
         <tr>
             <td>
                 <form:label path="uri">
-                    <spring:message text="URL"/>
+                    URL
                 </form:label>
             </td>
             <td>
-                <form:input path="uri" />
+                <form:input path="uri" type="URL" placeholder="Input link to point"/>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <c:if test="${empty point.name}">
-                    <input type="submit"
-                           value="<spring:message text="Add Point"/>" />
-                </c:if>
+                <input type="submit" value="Submit"/>
             </td>
         </tr>
     </table>
 </form:form>
 <br>
 <h3>Points List</h3>
-<c:if test="${!empty listPoints}">
+<c:if test="${!empty listOfPoints}">
     <table class="tg">
+        <thead>
         <tr>
-            <th width="80">Point ID</th>
-            <th width="120">Point Name</th>
-            <th width="120">Point Status</th>
+            <th>Point ID</th>
+            <th>Point Name</th>
+            <th>Point Number</th>
+            <th>Point URL</th>
+            <th>Edit</th>
+            <th>Delete</th>
         </tr>
-        <c:forEach items="${listPoints}" var="point">
+        </thead>
+        <tbody>
+        <c:forEach items="${listOfPoints}" var="point">
             <tr>
                 <td>${point.id}</td>
                 <td>${point.name}</td>
                 <td>${point.pointNumber}</td>
                 <td>${point.uri}</td>
+                <td>
+                    <a href="<c:url value='points/${point.id}/update' />">
+                        Edit
+                    </a>
+                </td>
+                <td>
+                    <a href="<c:url value='points/${point.id}/delete' />">
+                        Delete
+                    </a>
+                </td>
             </tr>
         </c:forEach>
+        </tbody>
     </table>
 </c:if>
 

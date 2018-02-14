@@ -23,7 +23,7 @@ public class HibernateUtil {
         sessionFactory.getCurrentSession().update(entity);
     }
 
-    public <T> void delete(final T entity) {
+    private <T> void delete(final T entity) {
         sessionFactory.getCurrentSession().delete(entity);
     }
 
