@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8"/>
-    <title>Parcels Delivery</title>
+    <title>Points</title>
 </head>
 <body>
 <h1> Add a Point</h1>
@@ -55,9 +55,9 @@
     </table>
 </form:form>
 <br>
-<h3>Points List</h3>
 <c:if test="${!empty listOfPoints}">
-    <table class="tg">
+    <h3>Points List</h3>
+    <table>
         <thead>
         <tr>
             <th>Point ID</th>
@@ -69,19 +69,19 @@
         </tr>
         </thead>
         <tbody>
-        <c:forEach items="${listOfPoints}" var="point">
+        <c:forEach items="${listOfPoints}" var="parcel">
             <tr>
-                <td>${point.id}</td>
-                <td>${point.name}</td>
-                <td>${point.pointNumber}</td>
-                <td>${point.uri}</td>
+                <td>${parcel.id}</td>
+                <td>${parcel.name}</td>
+                <td>${parcel.pointNumber}</td>
+                <td>${parcel.uri}</td>
                 <td>
-                    <a href="<c:url value='points/${point.id}/update' />">
+                    <a href="<c:url value='points/${parcel.id}/update' />">
                         Edit
                     </a>
                 </td>
                 <td>
-                    <a href="<c:url value='points/${point.id}/delete' />">
+                    <a href="<c:url value='points/${parcel.id}/delete' />">
                         Delete
                     </a>
                 </td>

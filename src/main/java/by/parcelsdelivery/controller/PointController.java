@@ -41,7 +41,7 @@ public class PointController {
     @RequestMapping(value = "/points/{id}/update", method = RequestMethod.GET)
     public String updatePoint(@PathVariable("id") int pointId, Model model) {
         model.addAttribute("point", pointService.getPoint(pointId));
-        model.addAttribute("listPoints", pointService.getAllPoints());
+        model.addAttribute("listOfPoints", pointService.getAllPoints());
         return "points";
     }
 

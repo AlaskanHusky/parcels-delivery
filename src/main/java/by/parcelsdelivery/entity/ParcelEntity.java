@@ -14,8 +14,8 @@ public class ParcelEntity {
     private int id;
     private String sender;
     private String message;
-    private int[] path;
-    public enum status {DELIVERED, TRANSIT, ON_NEXT_POINT}
+    private String path;
+    private String status;
 
     @Id
     @Column(name = "parcel_id")
@@ -47,12 +47,21 @@ public class ParcelEntity {
     }
 
     @Column(name = "path")
-    public int[] getPath() {
+    public String getPath() {
         return path;
     }
 
-    public void setPath(int[] path) {
+    public void setPath(String path) {
         this.path = path;
+    }
+
+    @Column(name = "status")
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
 }
