@@ -11,5 +11,6 @@ public interface PointDAO {
     void deletePoint(int pointId);
     List<PointEntity> getAllPoints();
     PointEntity getPoint(int pointId);
+    List getPointsNames();
 
 }

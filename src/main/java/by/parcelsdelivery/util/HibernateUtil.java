@@ -3,7 +3,6 @@ package by.parcelsdelivery.util;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import java.io.Serializable;
 import java.util.List;
 
 @Repository
@@ -40,6 +39,10 @@ public class HibernateUtil {
     @SuppressWarnings("unchecked")
     public <T> T fetchById(int id, Class<T> entityClass) {
         return sessionFactory.getCurrentSession().get(entityClass, id);
+    }
+
+    public <T> List fetchValuesByAttribute(String attrName, Class<T> entityClass) {
+        return sessionFactory.getCurrentSession().createQuery(" SELECT " + attrName + " FROM " + entityClass.getName()).list();
     }
 
     public void setSessionFactory(SessionFactory sessionFactory) {

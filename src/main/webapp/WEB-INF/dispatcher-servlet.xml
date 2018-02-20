@@ -50,9 +50,13 @@
     <!-- Enable the configuration of transactional behavior based on annotations -->
     <tx:annotation-driven/>
 
-    <!-- Hibernate Utility bean -->
+    <!-- Utilities beans -->
     <bean id="hibernateUtil" class="by.parcelsdelivery.util.HibernateUtil">
         <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean id="statusChanger" class="by.parcelsdelivery.util.StatusChanger">
+        <property name="parcelService" ref="parcelService"/>
     </bean>
 
     <!-- DAO beans -->

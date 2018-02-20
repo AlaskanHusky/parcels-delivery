@@ -42,6 +42,11 @@ public class PointDAOImpl implements PointDAO {
         return hibernateUtil.fetchById(pointId, PointEntity.class);
     }
 
+    @Override
+    public List getPointsNames(){
+        return hibernateUtil.fetchValuesByAttribute("name", PointEntity.class);
+    }
+
     public void setHibernateUtil(HibernateUtil hibernateUtil) {
         this.hibernateUtil = hibernateUtil;
     }

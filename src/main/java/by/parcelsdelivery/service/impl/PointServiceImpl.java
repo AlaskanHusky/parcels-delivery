@@ -44,6 +44,11 @@ public class PointServiceImpl implements PointService {
         return pointDAO.getPoint(pointId);
     }
 
+    @Override
+    public List getPointsNames(){
+        return pointDAO.getPointsNames();
+    }
+
     public void setPointDAO(PointDAO pointDAO) {
         this.pointDAO = pointDAO;
     }
