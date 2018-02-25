@@ -16,7 +16,7 @@
     <context:property-placeholder location="classpath:database.properties"/>
 
     <!-- Specifying the Resource location to load JS, CSS, Images etc -->
-    <mvc:resources mapping="/resources/**" location="/resources/" />
+    <mvc:resources mapping="/resources/**" location="/resources/"/>
 
     <!-- Enables the Spring MVC @Controller programming entity -->
     <mvc:annotation-driven/>
@@ -38,7 +38,7 @@
     <!-- Hibernate SessionFactory -->
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:hibernate.cfg.xml" />
+        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
         <property name="packagesToScan" value="by.parcelsdelivery.entity"/>
     </bean>
 
@@ -55,7 +55,11 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean id="statusChanger" class="by.parcelsdelivery.util.StatusChanger">
+    <bean id="httpRequester" class="by.parcelsdelivery.util.HttpRequester" />
+
+    <bean id="parcelSender" class="by.parcelsdelivery.util.ParcelSender">
+        <property name="httpRequester" ref="httpRequester"/>
+        <property name="pointService" ref="pointService"/>
         <property name="parcelService" ref="parcelService"/>
     </bean>
 
@@ -88,6 +92,7 @@
 
     <bean id="mainController" class="by.parcelsdelivery.controller.MainController">
         <property name="parcelService" ref="parcelService"/>
+        <property name="parcelSender" ref="parcelSender"/>
     </bean>
 
 </beans>

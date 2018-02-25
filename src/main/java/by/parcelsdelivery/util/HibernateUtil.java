@@ -41,6 +41,10 @@ public class HibernateUtil {
         return sessionFactory.getCurrentSession().get(entityClass, id);
     }
 
+    public <T> T fetchByAttribute(String field, String value, Class<T> entityClass) {
+        return (T) sessionFactory.getCurrentSession().createQuery("FROM " + entityClass.getName() + " E " + "WHERE E." + field + " = " + "'" + value + "'").getSingleResult();
+    }
+
     public <T> List fetchValuesByAttribute(String attrName, Class<T> entityClass) {
         return sessionFactory.getCurrentSession().createQuery(" SELECT " + attrName + " FROM " + entityClass.getName()).list();
     }

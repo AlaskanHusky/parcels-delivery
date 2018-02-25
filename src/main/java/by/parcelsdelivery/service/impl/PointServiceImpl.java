@@ -45,6 +45,11 @@ public class PointServiceImpl implements PointService {
     }
 
     @Override
+    public PointEntity getPointByName(String name) {
+        return  pointDAO.getPointByName(name);
+    }
+
+    @Override
     public List getPointsNames(){
         return pointDAO.getPointsNames();
     }

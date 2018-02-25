@@ -43,6 +43,11 @@ public class PointDAOImpl implements PointDAO {
     }
 
     @Override
+    public PointEntity getPointByName(String name) {
+        return  hibernateUtil.fetchByAttribute("name", name, PointEntity.class);
+    }
+
+    @Override
     public List getPointsNames(){
         return hibernateUtil.fetchValuesByAttribute("name", PointEntity.class);
     }
