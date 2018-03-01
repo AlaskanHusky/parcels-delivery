@@ -10,9 +10,7 @@ import org.json.simple.parser.ParseException;
 
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class ParcelSender {
 
@@ -24,28 +22,66 @@ public class ParcelSender {
         System.out.println("ParcelSender Constructor");
     }
 
-    public void sendParcel(ParcelEntity parcelEntity) {
-        String nextPointName;
-        String nextPointAddress;
+    public void runTasks(ParcelEntity parcelEntity) {
         String parcelPath = parcelEntity.getPath();
 
         if (isLast(parcelPath)) {
-            parcelEntity.setStatus("Delivered");
-            parcelService.updateParcel(parcelEntity);
-            // TODO Add status update in the database nodes that were previous in path
+            updateStatusCallback(parcelEntity.getUuid());
         } else {
-            nextPointName = getNextPointName(parcelPath);
-            nextPointAddress = pointService.getPointByName(nextPointName).getUri();
-            boolean isAvailable = httpRequester.doHead(nextPointAddress);
-            if (isAvailable) {
-                parcelEntity.setStatus("On Next Point");
-                parcelService.updateParcel(parcelEntity);
-                nextPointAddress = nextPointAddress + "/parcels/get";
-                httpRequester.doPost(nextPointAddress, parcelEntity);
-            } else {
-                // TODO Add a timer to send a constant request for the next node performance
+            sendParcel(parcelEntity, parcelPath);
+        }
+    }
+
+    private void sendParcel(ParcelEntity parcelEntity, String parcelPath) {
+        String nextPointName = getNextPointName(parcelPath);
+        String nextPointAddress = pointService.getPointByName(nextPointName).getUri() + "/parcels/receive";
+        boolean isAvailable = httpRequester.doPost(nextPointAddress, parcelEntity);
+
+        if (isAvailable) {
+            parcelEntity.setStatus("On Next Point");
+            parcelService.updateParcel(parcelEntity);
+        } else {
+
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+
+            sendParcel(parcelEntity, parcelPath);
+        }
+    }
+
+    public void updateStatusCallback(String uuid) {
+        ParcelEntity parcelEntity = parcelService.getParcelByUUID(uuid);
+        String path = parcelEntity.getPath();
+
+        parcelEntity.setStatus("Delivered");
+        parcelService.updateParcel(parcelEntity);
+
+        if (!isFirst(path)) {
+
+            String previousPointName = getPreviousPointName(path);
+            String nextPointAddress = pointService.getPointByName(previousPointName).getUri() + "/parcels/delivered";
+            boolean isAvailable = httpRequester.doPost(nextPointAddress, uuid);
+
+            if (!isAvailable) {
+
+                try {
+                    Thread.sleep(10000);
+                } catch (InterruptedException ex) {
+                    ex.printStackTrace();
+                }
+
+                updateStatusCallback(uuid);
             }
         }
+    }
+
+    private boolean isFirst(String path) {
+        String currentPointName = getPointName();
+        List<String> pointsFromPath = pathParser(path);
+        return pointsFromPath.indexOf(currentPointName) == 0;
     }
 
     private boolean isLast(String path) {
@@ -61,6 +97,20 @@ public class ParcelSender {
         }
 
         return bit;
+    }
+
+    private String getPreviousPointName(String path) {
+        List<String> pathPoints = pathParser(path);
+        String currentPoint = getPointName();
+        String name = "";
+
+        for (String pointName : pathPoints) {
+            if (Objects.equals(currentPoint, pointName)) {
+                name = pathPoints.get(pathPoints.indexOf(currentPoint) - 1);
+            }
+        }
+
+        return name;
     }
 
     private String getNextPointName(String path) {
@@ -79,12 +129,11 @@ public class ParcelSender {
 
     private String getPointName() {
         JSONParser parser = new JSONParser();
-        JSONObject jsonObject;
         String pathToFile = "src/main/resources/point.json";
         String name = "";
 
         try {
-            jsonObject = (JSONObject) parser.parse(new FileReader(pathToFile));
+            JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(pathToFile));
             name = (String) jsonObject.get("name");
         } catch (IOException | ParseException ex) {
             ex.printStackTrace();

@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.UUID;
+
 @Controller
 public class MainController {
 
@@ -29,15 +31,23 @@ public class MainController {
 
     @RequestMapping(value = "/parcels/send", method = RequestMethod.POST)
     public String addParcel(@ModelAttribute("parcel") ParcelEntity parcelEntity) {
+        String parcelUUID = UUID.randomUUID().toString();
+        parcelEntity.setUuid(parcelUUID);
         parcelService.createParcel(parcelEntity);
-        parcelSender.sendParcel(parcelEntity);
+        parcelSender.runTasks(parcelEntity);
         return "redirect:/";
     }
 
-    @RequestMapping(value = "/parcels/get", method = RequestMethod.POST)
+    @RequestMapping(value = "/parcels/receive", method = RequestMethod.POST)
     public String getParcel(@RequestBody ParcelEntity parcelEntity) {
         parcelService.createParcel(parcelEntity);
-        parcelSender.sendParcel(parcelEntity);
+        parcelSender.runTasks(parcelEntity);
+        return "redirect:/";
+    }
+
+    @RequestMapping(value = "/parcels/delivered", method = RequestMethod.POST)
+    public String updateParcelStatus(@RequestBody String uuid) {
+        parcelSender.updateStatusCallback(uuid.split("=")[1]);
         return "redirect:/";
     }
 
