@@ -14,6 +14,7 @@
 <c:url var="addAction" value="/points/add"/>
 
 <form:form method="post" action="${addAction}" modelAttribute="point">
+
     <table>
         <tr>
             <td>
@@ -23,7 +24,7 @@
         <tr>
             <td>
                 <form:label path="name">
-                    Name
+                    <h5>Name</h5>
                 </form:label>
             </td>
             <td>
@@ -33,7 +34,7 @@
         <tr>
             <td>
                 <form:label path="pointNumber">
-                    Point's number
+                    <h5>Point's number</h5>
                 </form:label>
             </td>
             <td>
@@ -43,7 +44,7 @@
         <tr>
             <td>
                 <form:label path="uri">
-                    URL
+                    <h5>URL</h5>
                 </form:label>
             </td>
             <td>

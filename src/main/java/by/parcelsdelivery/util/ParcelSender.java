@@ -7,6 +7,7 @@ import by.parcelsdelivery.service.PointService;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.util.StringUtils;
 
 import java.io.FileReader;
 import java.io.IOException;
@@ -35,9 +36,9 @@ public class ParcelSender {
     private void sendParcel(ParcelEntity parcelEntity, String parcelPath) {
         String nextPointName = getNextPointName(parcelPath);
         String nextPointAddress = pointService.getPointByName(nextPointName).getUri() + "/parcels/receive";
-        boolean isAvailable = httpRequester.doPost(nextPointAddress, parcelEntity);
+        boolean available = httpRequester.doPost(nextPointAddress, parcelEntity);
 
-        if (isAvailable) {
+        if (available) {
             parcelEntity.setStatus("On Next Point");
             parcelService.updateParcel(parcelEntity);
         } else {
@@ -59,34 +60,36 @@ public class ParcelSender {
         parcelEntity.setStatus("Delivered");
         parcelService.updateParcel(parcelEntity);
 
-        if (!isFirst(path)) {
-
-            String previousPointName = getPreviousPointName(path);
-            String nextPointAddress = pointService.getPointByName(previousPointName).getUri() + "/parcels/delivered";
-            boolean isAvailable = httpRequester.doPost(nextPointAddress, uuid);
-
-            if (!isAvailable) {
-
-                try {
-                    Thread.sleep(10000);
-                } catch (InterruptedException ex) {
-                    ex.printStackTrace();
-                }
-
-                updateStatusCallback(uuid);
-            }
+        String previousPointName = getPreviousPointName(path);
+        if (StringUtils.isEmpty(previousPointName))
+        {
+            return;
         }
+
+        String nextPointAddress = pointService.getPointByName(previousPointName).getUri() + "/parcels/delivered";
+        boolean isAvailable = httpRequester.doPost(nextPointAddress, uuid);
+
+        if (!isAvailable) {
+
+            try {
+                Thread.sleep(10000);
+            } catch (InterruptedException ex) {
+                ex.printStackTrace();
+            }
+
+            updateStatusCallback(uuid);
+        }
+
     }
 
     private boolean isFirst(String path) {
         String currentPointName = getPointName();
-        List<String> pointsFromPath = pathParser(path);
-        return pointsFromPath.indexOf(currentPointName) == 0;
+        return path.indexOf(currentPointName) == 0 && path.indexOf("-") == currentPointName.length();
     }
 
     private boolean isLast(String path) {
-        String currentPointName = getPointName();
         List<String> pointsFromPath = pathParser(path);
+        String currentPointName = getPointName();
         boolean bit = false;
 
         for (String pointName : pointsFromPath) {
@@ -99,10 +102,16 @@ public class ParcelSender {
         return bit;
     }
 
+    private int getPointIndex(String path) {
+        List<String> pointsFromPath = pathParser(path);
+        String currentPointName = getPointName();
+        return pointsFromPath.indexOf(currentPointName);
+    }
+
     private String getPreviousPointName(String path) {
         List<String> pathPoints = pathParser(path);
         String currentPoint = getPointName();
-        String name = "";
+        String name = null;
 
         for (String pointName : pathPoints) {
             if (Objects.equals(currentPoint, pointName)) {

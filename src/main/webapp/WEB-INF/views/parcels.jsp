@@ -23,7 +23,7 @@
         <tr>
             <td>
                 <form:label path="sender">
-                    Sender
+                    <h5>Sender</h5>
                 </form:label>
             </td>
             <td>
@@ -33,7 +33,7 @@
         <tr>
             <td>
                 <form:label path="message">
-                    Parcel's message
+                    <h5>Parcel's message</h5>
                 </form:label>
             </td>
             <td>
@@ -43,7 +43,7 @@
         <tr>
             <td>
                 <form:label path="path">
-                    Path
+                    <h5>Path</h5>
                 </form:label>
             </td>
             <td>
