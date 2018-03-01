@@ -23,18 +23,18 @@ public class ParcelSender {
         System.out.println("ParcelSender Constructor");
     }
 
-    public void runTasks(ParcelEntity parcelEntity) {
+    public void handleParcel(ParcelEntity parcelEntity) {
         String parcelPath = parcelEntity.getPath();
 
         if (isLast(parcelPath)) {
-            updateStatusCallback(parcelEntity.getUuid());
+            updateStatusCallback(parcelEntity);
         } else {
             sendParcel(parcelEntity, parcelPath);
         }
     }
 
     private void sendParcel(ParcelEntity parcelEntity, String parcelPath) {
-        String nextPointName = getNextPointName(parcelPath);
+        String nextPointName = pathParser(parcelPath).get(getPointIndex(parcelPath) + 1);
         String nextPointAddress = pointService.getPointByName(nextPointName).getUri() + "/parcels/receive";
         boolean available = httpRequester.doPost(nextPointAddress, parcelEntity);
 
@@ -54,20 +54,23 @@ public class ParcelSender {
     }
 
     public void updateStatusCallback(String uuid) {
-        ParcelEntity parcelEntity = parcelService.getParcelByUUID(uuid);
+        updateStatusCallback(parcelService.getParcelByUUID(uuid));
+    }
+
+    private void updateStatusCallback(ParcelEntity parcelEntity) {
         String path = parcelEntity.getPath();
 
         parcelEntity.setStatus("Delivered");
         parcelService.updateParcel(parcelEntity);
 
-        String previousPointName = getPreviousPointName(path);
-        if (StringUtils.isEmpty(previousPointName))
+        if (getPointIndex(path) == 0)
         {
             return;
         }
 
+        String previousPointName = pathParser(path).get(getPointIndex(path) - 1);
         String nextPointAddress = pointService.getPointByName(previousPointName).getUri() + "/parcels/delivered";
-        boolean isAvailable = httpRequester.doPost(nextPointAddress, uuid);
+        boolean isAvailable = httpRequester.doPost(nextPointAddress, parcelEntity.getUuid());
 
         if (!isAvailable) {
 
@@ -77,63 +80,19 @@ public class ParcelSender {
                 ex.printStackTrace();
             }
 
-            updateStatusCallback(uuid);
+            updateStatusCallback(parcelEntity);
         }
 
-    }
-
-    private boolean isFirst(String path) {
-        String currentPointName = getPointName();
-        return path.indexOf(currentPointName) == 0 && path.indexOf("-") == currentPointName.length();
     }
 
     private boolean isLast(String path) {
-        List<String> pointsFromPath = pathParser(path);
-        String currentPointName = getPointName();
-        boolean bit = false;
-
-        for (String pointName : pointsFromPath) {
-            if (Objects.equals(currentPointName, pointName)) {
-                int i = pointsFromPath.indexOf(pointName);
-                bit = i == (pointsFromPath.size() - 1);
-            }
-        }
-
-        return bit;
+        return getPointIndex(path) == pathParser(path).size() - 1;
     }
 
     private int getPointIndex(String path) {
         List<String> pointsFromPath = pathParser(path);
         String currentPointName = getPointName();
         return pointsFromPath.indexOf(currentPointName);
-    }
-
-    private String getPreviousPointName(String path) {
-        List<String> pathPoints = pathParser(path);
-        String currentPoint = getPointName();
-        String name = null;
-
-        for (String pointName : pathPoints) {
-            if (Objects.equals(currentPoint, pointName)) {
-                name = pathPoints.get(pathPoints.indexOf(currentPoint) - 1);
-            }
-        }
-
-        return name;
-    }
-
-    private String getNextPointName(String path) {
-        List<String> pathPoints = pathParser(path);
-        String currentPoint = getPointName();
-        String name = "";
-
-        for (String pointName : pathPoints) {
-            if (Objects.equals(currentPoint, pointName)) {
-                name = pathPoints.get(pathPoints.indexOf(currentPoint) + 1);
-            }
-        }
-
-        return name;
     }
 
     private String getPointName() {

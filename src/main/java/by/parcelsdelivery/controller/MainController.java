@@ -34,20 +34,20 @@ public class MainController {
         String parcelUUID = UUID.randomUUID().toString();
         parcelEntity.setUuid(parcelUUID);
         parcelService.createParcel(parcelEntity);
-        parcelSender.runTasks(parcelEntity);
+        parcelSender.handleParcel(parcelEntity);
         return "redirect:/";
     }
 
     @RequestMapping(value = "/parcels/receive", method = RequestMethod.POST)
     public String getParcel(@RequestBody ParcelEntity parcelEntity) {
         parcelService.createParcel(parcelEntity);
-        parcelSender.runTasks(parcelEntity);
+        parcelSender.handleParcel(parcelEntity);
         return "redirect:/";
     }
 
     @RequestMapping(value = "/parcels/delivered", method = RequestMethod.POST)
     public String updateParcelStatus(@RequestBody String uuid) {
-        parcelSender.updateStatusCallback(uuid.split("=")[1]);
+        parcelSender.updateStatusCallback(uuid);
         return "redirect:/";
     }
 

@@ -6,11 +6,12 @@ import com.google.gson.Gson;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.NameValuePair;
+import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.IOException;
@@ -25,7 +26,8 @@ public class HttpRequester {
     }
 
     boolean doPost(String url, ParcelEntity parcelEntity) {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(30 * 1000).build();
+        CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
         HttpPost httpPost = new HttpPost(url);
         Gson gson = new Gson();
         StringEntity postStringEntity = null;
@@ -53,7 +55,8 @@ public class HttpRequester {
     }
 
     boolean doPost(String url, String uuid) {
-        CloseableHttpClient httpClient = HttpClients.createDefault();
+        RequestConfig requestConfig = RequestConfig.custom().setConnectTimeout(30 * 1000).build();
+        CloseableHttpClient httpClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).build();
         HttpPost httpPost = new HttpPost(url);
         List<NameValuePair> urlParameters = new ArrayList<>();
         HttpEntity postParams = null;
