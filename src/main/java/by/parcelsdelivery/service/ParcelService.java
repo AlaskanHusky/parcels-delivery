@@ -11,5 +11,5 @@ public interface ParcelService {
     void deleteParcel(int parcelId);
     List<ParcelEntity> getAllParcels();
     ParcelEntity getParcel(int parcelId);
-
+    ParcelEntity getParcelByUUID(String uuid);
 }

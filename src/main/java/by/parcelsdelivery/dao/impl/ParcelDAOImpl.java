@@ -42,6 +42,11 @@ public class ParcelDAOImpl implements ParcelDAO {
         return hibernateUtil.fetchById(parcelId, ParcelEntity.class);
     }
 
+    @Override
+    public ParcelEntity getParcelByUUID(String uuid) {
+        return  hibernateUtil.fetchByAttribute("uuid", uuid, ParcelEntity.class);
+    }
+
     public void setHibernateUtil(HibernateUtil hibernateUtil) {
         this.hibernateUtil = hibernateUtil;
     }

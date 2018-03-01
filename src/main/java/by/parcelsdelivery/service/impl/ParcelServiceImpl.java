@@ -44,6 +44,11 @@ public class ParcelServiceImpl implements ParcelService {
         return parcelDAO.getParcel(parcelId);
     }
 
+    @Override
+    public ParcelEntity getParcelByUUID(String uuid) {
+        return parcelDAO.getParcelByUUID(uuid);
+    }
+
     public void setParcelDAO(ParcelDAO parcelDAO) {
         this.parcelDAO = parcelDAO;
     }

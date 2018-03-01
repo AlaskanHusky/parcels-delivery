@@ -15,6 +15,7 @@ public class ParcelEntity {
     private String sender;
     private String message;
     private String path;
+    private String uuid;
     private String status;
 
     @Id
@@ -53,6 +54,15 @@ public class ParcelEntity {
 
     public void setPath(String path) {
         this.path = path;
+    }
+
+    @Column(name = "uuid")
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     @Column(name = "status")
