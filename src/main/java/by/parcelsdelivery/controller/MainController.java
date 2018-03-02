@@ -31,15 +31,15 @@ public class MainController {
 
     @RequestMapping(value = "/parcels/send", method = RequestMethod.POST)
     public String addParcel(@ModelAttribute("parcel") ParcelEntity parcelEntity) {
-        String parcelUUID = UUID.randomUUID().toString();
-        parcelEntity.setUuid(parcelUUID);
+        parcelEntity.setUuid(UUID.randomUUID().toString());
         parcelService.createParcel(parcelEntity);
-        parcelSender.handleParcel(parcelEntity);
+        parcelSender.sendParcel(parcelEntity);
         return "redirect:/";
     }
 
     @RequestMapping(value = "/parcels/receive", method = RequestMethod.POST)
     public String getParcel(@RequestBody ParcelEntity parcelEntity) {
+        parcelEntity.setStatus("Transit");
         parcelService.createParcel(parcelEntity);
         parcelSender.handleParcel(parcelEntity);
         return "redirect:/";
