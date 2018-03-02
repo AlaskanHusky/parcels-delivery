@@ -61,7 +61,10 @@
         <property name="httpRequester" ref="httpRequester"/>
         <property name="pointService" ref="pointService"/>
         <property name="parcelService" ref="parcelService"/>
+        <property name="pointUtil" ref="pointUtil" />
     </bean>
+
+    <bean id="pointUtil" class="by.parcelsdelivery.util.PointUtil" />
 
     <!-- DAO beans -->
     <bean id="parcelDAO" class="by.parcelsdelivery.dao.impl.ParcelDAOImpl">

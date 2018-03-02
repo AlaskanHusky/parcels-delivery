@@ -31,23 +31,23 @@ public class MainController {
 
     @RequestMapping(value = "/parcels/send", method = RequestMethod.POST)
     public String addParcel(@ModelAttribute("parcel") ParcelEntity parcelEntity) {
-        String parcelUUID = UUID.randomUUID().toString();
-        parcelEntity.setUuid(parcelUUID);
+        parcelEntity.setUuid(UUID.randomUUID().toString());
         parcelService.createParcel(parcelEntity);
-        parcelSender.runTasks(parcelEntity);
+        parcelSender.sendParcel(parcelEntity);
         return "redirect:/";
     }
 
     @RequestMapping(value = "/parcels/receive", method = RequestMethod.POST)
     public String getParcel(@RequestBody ParcelEntity parcelEntity) {
+        parcelEntity.setStatus("Transit");
         parcelService.createParcel(parcelEntity);
-        parcelSender.runTasks(parcelEntity);
+        parcelSender.handleParcel(parcelEntity);
         return "redirect:/";
     }
 
     @RequestMapping(value = "/parcels/delivered", method = RequestMethod.POST)
     public String updateParcelStatus(@RequestBody String uuid) {
-        parcelSender.updateStatusCallback(uuid.split("=")[1]);
+        parcelSender.updateStatusCallback(uuid);
         return "redirect:/";
     }
 
