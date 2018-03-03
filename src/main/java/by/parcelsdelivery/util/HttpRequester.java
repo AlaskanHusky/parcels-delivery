@@ -23,12 +23,24 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+/**
+ * Класс для отправки http-запросов на другие узлы.
+ */
 public class HttpRequester {
 
     public HttpRequester() {
         System.out.println("HttpRequester Constructor");
     }
 
+    /**
+     * Отправляет POST-запрос на заданный url.
+     * В теле запроса содержится посылка, преобразованная
+     * в JSON.
+     *
+     * @param  url           адрес на который посылается запрос
+     * @param  parcelEntity  объект класса {@link ParcelEntity}, который
+     *                      передаётся в теле запроса
+     */
     void doPost(String url, ParcelEntity parcelEntity) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
@@ -55,6 +67,13 @@ public class HttpRequester {
         }
     }
 
+    /**
+     * Отправляет POST-запрос на заданный url.
+     * В заголовке запроса содержится параметр с UUID посылки.
+     *
+     * @param  url   адрес на который посылается запрос
+     * @param  uuid  UUID посылки {@link ParcelEntity#uuid}, передаваемый в качестве параметра запроса
+     */
     void doPost(String url, String uuid) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpPost httpPost = new HttpPost(url);
@@ -80,6 +99,11 @@ public class HttpRequester {
         }
     }
 
+    /**
+     * Повторяет HEAD запрос для проверки доступности ресура.
+     *
+     * @param  url  адрес ресурса
+     */
     void repeatRequest(String url) {
         boolean pointAccess;
         int interval = 5000;
@@ -96,6 +120,16 @@ public class HttpRequester {
         } while (!pointAccess);
     }
 
+    /**
+     * Отправляет HEAD запрос с пустым телом для
+     * проверки доступности ресурса.
+     * Если ресурс доступен, то возвращает true.
+     * Если не удалось установить соединение,
+     * то возвращает false.
+     *
+     * @param  url  адрес ресурса
+     * @return      true/false
+     */
     private boolean doHead(String url) {
         CloseableHttpClient httpClient = HttpClients.createDefault();
         HttpHead httpHead = new HttpHead(url);
@@ -113,6 +147,11 @@ public class HttpRequester {
         return responseStatus == HttpStatus.SC_OK;
     }
 
+    /**
+     * Останавливает выполнение основного потока на заданное время.
+     *
+     * @param  delay  время задержки
+     */
     private void delay(int delay) {
         try {
             Thread.sleep(delay);
