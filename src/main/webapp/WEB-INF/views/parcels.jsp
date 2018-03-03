@@ -1,9 +1,11 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link rel="stylesheet" href="fonts.css">
 <html>
 <head>
     <meta charset="utf-8"/>
     <title>Parcels</title>
+
 </head>
 <body>
 
@@ -67,7 +69,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Submit"/>
+                <input class="waves-effect indigo darken-3 btn" type="submit" value="Submit"/>
             </td>
         </tr>
     </table>
@@ -75,7 +77,7 @@
 <br>
 <c:if test="${!empty listOfParcels}">
     <h3>Parcels List</h3>
-    <table>
+    <table class="bordered striped">
         <thead>
         <tr>
             <th>Parcel ID</th>
@@ -83,8 +85,8 @@
             <th>Parcel Message</th>
             <th>Parcel Path</th>
             <th>Parcel Status</th>
-            <th>Edit</th>
-            <th>Delete</th>
+            <%--<th>Edit</th>
+            <th>Delete</th>--%>
         </tr>
         </thead>
         <tbody>
@@ -95,7 +97,7 @@
                 <td>${parcel.message}</td>
                 <td>${parcel.path}</td>
                 <td>${parcel.status}</td>
-                <td>
+                <%--<td>
                     <a href="<c:url value='parcels/${parcel.id}/update' />">
                         Edit
                     </a>
@@ -104,7 +106,7 @@
                     <a href="<c:url value='parcels/${parcel.id}/delete' />">
                         Delete
                     </a>
-                </td>
+                </td>--%>
             </tr>
         </c:forEach>
         </tbody>

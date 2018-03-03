@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<link rel="stylesheet" href="fonts.css">
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -53,7 +54,7 @@
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Submit"/>
+                <input class="waves-effect indigo darken-3 btn" type="submit" value="Submit"/>
             </td>
         </tr>
     </table>
@@ -61,7 +62,7 @@
 <br>
 <c:if test="${!empty listOfPoints}">
     <h3>Points List</h3>
-    <table>
+    <table class="bordered striped">
         <thead>
         <tr>
             <th>Point ID</th>
