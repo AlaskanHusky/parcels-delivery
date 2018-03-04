@@ -4,77 +4,50 @@
 <head>
     <meta charset="utf-8"/>
     <title>Parcels</title>
+    <link rel="stylesheet" href="resources/css/kickstart.css">
 </head>
 <body>
 
 <%@ include file='header.jsp' %>
 
-<h1> Add or Update a Parcel</h1>
+<h2> Add or Update a Parcel</h2>
 
 <c:url var="addAction" value="/parcels/add"/>
 
-<form:form method="post" action="${addAction}" modelAttribute="parcel">
-    <table>
-        <tr>
-            <td>
-                <form:input path="id" type="hidden"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="sender">
-                    Sender
-                </form:label>
-            </td>
-            <td>
-                <form:input path="sender" placeholder="Input parcel's sender"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="message">
-                    Parcel's message
-                </form:label>
-            </td>
-            <td>
-                <form:input path="message" placeholder="Input parcel's message"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="path">
-                    Path
-                </form:label>
-            </td>
-            <td>
-                <form:input path="path" placeholder="Input parcelss path"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="status">
-                    Status
-                </form:label>
-            </td>
-            <td>
-                <form:radiobutton path="status" value="Transit" />
-                    Transit
-                <form:radiobutton path="status" value="On Next Point" />
-                    On Next Point
-                <form:radiobutton path="status" value="Delivered" />
-                    Delivered
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
-                <input type="submit" value="Submit"/>
-            </td>
-        </tr>
-    </table>
-</form:form>
+<div class="col_12 column">
+    <form:form method="post" action="${addAction}" modelAttribute="parcel" class="vertical">
+    <div class="col_3 column">
+        <form:input path="id" type="hidden"/>
+
+        <form:label path="sender">Sender</form:label>
+        <form:input path="sender" placeholder="Input parcel's sender"/>
+
+        <form:label path="message">Parcel's message</form:label>
+        <form:input path="message" placeholder="Input parcel's message"/>
+
+        <form:label path="path">Path</form:label>
+        <form:input path="path" placeholder="Input parcelss path"/>
+
+        <fieldset>
+            <legend>Parcel's Status</legend>
+            <form:radiobutton class="radio" name="radio" path="status" value="Transit"/>
+            <form:label class="inline" path="status">Transit</form:label>
+            <br>
+            <form:radiobutton class="radio" path="status" value="On Next Point"/>
+            <form:label class="inline" path="status">On Next Point</form:label>
+            <br>
+            <form:radiobutton class="radio" path="status" value="Delivered"/>
+            <form:label class="inline" path="status">Delivered</form:label>
+        </fieldset>
+        <div class="col_4 column">
+            <input type="submit" value="Submit"/>
+        </div>
+        </form:form>
+    </div>
+</div>
 <br>
 <c:if test="${!empty listOfParcels}">
-    <h3>Parcels List</h3>
+    <h4>Parcels List</h4>
     <table>
         <thead>
         <tr>
@@ -110,6 +83,5 @@
         </tbody>
     </table>
 </c:if>
-
 </body>
 </html>

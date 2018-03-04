@@ -4,62 +4,37 @@
 <head>
     <meta charset="utf-8"/>
     <title>Points</title>
+    <link rel="stylesheet" href="resources/css/kickstart.css">
 </head>
 <body>
 
 <%@ include file='header.jsp' %>
 
-<h1> Add or Update a Point</h1>
+<h2> Add or Update a Point</h2>
 
 <c:url var="addAction" value="/points/add"/>
+<div class="col_12 column">
+    <form:form method="post" action="${addAction}" modelAttribute="point" class="vertical">
+        <div class="col_3 column">
+            <form:input path="id" type="hidden"/>
 
-<form:form method="post" action="${addAction}" modelAttribute="point">
-    <table>
-        <tr>
-            <td>
-                <form:input path="id" type="hidden"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="name">
-                    Name
-                </form:label>
-            </td>
-            <td>
-                <form:input path="name" type="text" maxlength="5" placeholder="Input point name"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="pointNumber">
-                    Point's number
-                </form:label>
-            </td>
-            <td>
-                <form:input path="pointNumber" type="text" placeholder="Input point's number"/>
-            </td>
-        </tr>
-        <tr>
-            <td>
-                <form:label path="uri">
-                    URL
-                </form:label>
-            </td>
-            <td>
-                <form:input path="uri" type="URL" placeholder="Input link to point"/>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2">
+            <form:label path="name">Name</form:label>
+            <form:input path="name" type="text" maxlength="5" placeholder="Input point name"/>
+
+            <form:label path="pointNumber">Point's number</form:label>
+            <form:input path="pointNumber" type="text" placeholder="Input point's number"/>
+
+            <form:label path="uri">URL</form:label>
+            <form:input path="uri" type="URL" placeholder="Input link to point"/>
+            <div class="col_4 column">
                 <input type="submit" value="Submit"/>
-            </td>
-        </tr>
-    </table>
-</form:form>
+            </div>
+        </div>
+    </form:form>
+</div>
 <br>
 <c:if test="${!empty listOfPoints}">
-    <h3>Points List</h3>
+    <h4>Points List</h4>
     <table>
         <thead>
         <tr>
@@ -93,6 +68,5 @@
         </tbody>
     </table>
 </c:if>
-
 </body>
 </html>
