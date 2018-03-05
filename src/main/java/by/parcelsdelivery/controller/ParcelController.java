@@ -11,6 +11,8 @@ import by.parcelsdelivery.entity.ParcelEntity;
 import by.parcelsdelivery.service.ParcelService;
 import by.parcelsdelivery.util.ParcelSender;
 
+import static by.parcelsdelivery.controller.MainController.REDIRECT_PATH;
+
 /**
  * Класс для обработки запросов связанных с операциями CRUD для посылки {@link ParcelEntity}
  */
@@ -19,7 +21,6 @@ public class ParcelController
 {
 	private static final String PARCEL_ATTRIBUTE = "parcel";
 	private static final String PARCELS_PAGE = "parcels";
-	private static final String REDIRECT_PATH = "redirect:/";
 	private ParcelService parcelService;
 	private ParcelSender parcelSender;
 

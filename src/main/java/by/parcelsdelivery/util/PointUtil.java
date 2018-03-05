@@ -14,6 +14,9 @@ import org.json.simple.parser.ParseException;
  */
 class PointUtil
 {
+	private static final String PATH_TO_RESOURCE_FILE = "src/main/resources/point.json";
+	private static final String DELIMITER = "-";
+
 	public PointUtil()
 	{
 		System.out.println("PointUtil Constructor");
@@ -71,12 +74,11 @@ class PointUtil
 	 */
 	private static String getPointName()
 	{
-		JSONParser parser = new JSONParser();
-		String pathToFile = "src/main/resources/point.json";
 		String name = "";
 		try
 		{
-			JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(pathToFile));
+			JSONParser parser = new JSONParser();
+			JSONObject jsonObject = (JSONObject) parser.parse(new FileReader(PATH_TO_RESOURCE_FILE));
 			name = (String) jsonObject.get("name");
 		}
 		catch (IOException | ParseException ex)
@@ -94,7 +96,6 @@ class PointUtil
 	 */
 	private List<String> pathParser(String path)
 	{
-		String delimiter = "-";
-		return Arrays.asList(path.split(delimiter));
+		return Arrays.asList(path.split(DELIMITER));
 	}
 }

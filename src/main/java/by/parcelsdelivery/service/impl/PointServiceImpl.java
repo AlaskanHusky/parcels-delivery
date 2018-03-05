@@ -19,46 +19,67 @@ public class PointServiceImpl implements PointService
 		System.out.println("PointServiceImpl Constructor");
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void createPoint(PointEntity point)
+	public void save(PointEntity point)
 	{
-		pointDAO.createPoint(point);
+		pointDAO.create(point);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void updatePoint(PointEntity point)
+	public void update(PointEntity point)
 	{
-		pointDAO.updatePoint(point);
+		pointDAO.update(point);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void deletePoint(int pointId)
+	public void delete(int pointId)
 	{
-		pointDAO.deletePoint(pointId);
+		pointDAO.delete(pointId);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public List<PointEntity> getAllPoints()
+	public List<PointEntity> getAll()
 	{
-		return pointDAO.getAllPoints();
+		return pointDAO.getAll();
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public PointEntity getPoint(int pointId)
+	public PointEntity getById(int pointId)
 	{
-		return pointDAO.getPoint(pointId);
+		return pointDAO.getById(pointId);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public PointEntity getPointByName(String name)
+	public PointEntity getByName(String name)
 	{
-		return pointDAO.getPointByName(name);
+		return pointDAO.getByName(name);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public List getPointsNames()
+	public List getNames()
 	{
-		return pointDAO.getPointsNames();
+		return pointDAO.getNames();
 	}
 
 	public void setPointDAO(PointDAO pointDAO)

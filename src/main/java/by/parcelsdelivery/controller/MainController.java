@@ -12,6 +12,8 @@ import by.parcelsdelivery.entity.ParcelEntity;
 @Controller
 public class MainController
 {
+	public static final String REDIRECT_PATH = "redirect:/";
+
 	public MainController()
 	{
 		System.out.println("MainController Constructor");

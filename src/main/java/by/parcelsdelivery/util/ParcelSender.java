@@ -50,7 +50,7 @@ public class ParcelSender
 	public void sendParcel(ParcelEntity parcelEntity)
 	{
 		String nextPointName = pointUtil.getNextPointName(parcelEntity.getPath());
-		String nextPointAddress = pointService.getPointByName(nextPointName).getUri();
+		String nextPointAddress = pointService.getByName(nextPointName).getUri();
 		httpRequester.repeatRequest(nextPointAddress);
 		parcelEntity.setStatus(ParcelEntity.STATUS_ON_NEXT_POINT);
 		parcelService.update(parcelEntity);
@@ -87,7 +87,7 @@ public class ParcelSender
 			return;
 		}
 		String previousPointName = pointUtil.getPreviousPointName(parcelPath);
-		String previousPointAddress = pointService.getPointByName(previousPointName).getUri();
+		String previousPointAddress = pointService.getByName(previousPointName).getUri();
 		httpRequester.repeatRequest(previousPointAddress);
 		httpRequester.doPost(previousPointAddress + PARCELS_DELIVERED_PATH, parcelEntity.getUuid());
 	}

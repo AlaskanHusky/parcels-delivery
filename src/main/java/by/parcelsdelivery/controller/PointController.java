@@ -9,12 +9,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import by.parcelsdelivery.entity.PointEntity;
 import by.parcelsdelivery.service.PointService;
 
+import static by.parcelsdelivery.controller.MainController.REDIRECT_PATH;
+
 /**
  * Класс для обработки запросов связанных с операциями CRUD для узла {@link PointEntity}
  */
 @Controller
 public class PointController
 {
+	private static final String POINT_ATTRIBUTE = "point";
+	private static final String LIST_OF_POINTS_ATTRIBUTE = "listOfPoints";
+	private static final String POINTS_PAGE = "points";
 	private PointService pointService;
 
 	public PointController()
@@ -32,9 +37,9 @@ public class PointController
 	@RequestMapping(value = "/points", method = RequestMethod.GET)
 	public String getPoints(Model model)
 	{
-		model.addAttribute("point", new PointEntity());
-		model.addAttribute("listOfPoints", pointService.getAllPoints());
-		return "points";
+		model.addAttribute(POINT_ATTRIBUTE, new PointEntity());
+		model.addAttribute(LIST_OF_POINTS_ATTRIBUTE, pointService.getAll());
+		return POINTS_PAGE;
 	}
 
 	/**
@@ -45,19 +50,17 @@ public class PointController
 	 * @return перенаправление на страницу со списком узлов
 	 */
 	@RequestMapping(value = "/points/add", method = RequestMethod.POST)
-	public String addPoint(@ModelAttribute("point") PointEntity pointEntity)
+	public String addPoint(@ModelAttribute(POINT_ATTRIBUTE) PointEntity pointEntity)
 	{
 		if (pointEntity.getId() == 0)
 		{
-			// Therefore new point and we add it
-			pointService.createPoint(pointEntity);
+			pointService.save(pointEntity);
 		}
 		else
 		{
-			// Therefore existing and we update it
-			pointService.updatePoint(pointEntity);
+			pointService.update(pointEntity);
 		}
-		return "redirect:/points";
+		return REDIRECT_PATH + POINTS_PAGE;
 	}
 
 	/**
@@ -71,9 +74,9 @@ public class PointController
 	@RequestMapping(value = "/points/{id}/update", method = RequestMethod.GET)
 	public String updatePoint(@PathVariable("id") int pointId, Model model)
 	{
-		model.addAttribute("point", pointService.getPoint(pointId));
-		model.addAttribute("listOfPoints", pointService.getAllPoints());
-		return "points";
+		model.addAttribute(POINT_ATTRIBUTE, pointService.getById(pointId));
+		model.addAttribute(LIST_OF_POINTS_ATTRIBUTE, pointService.getAll());
+		return POINTS_PAGE;
 	}
 
 	/**
@@ -85,8 +88,8 @@ public class PointController
 	@RequestMapping(value = "/points/{id}/delete", method = RequestMethod.GET)
 	public String deletePoint(@PathVariable("id") int pointId)
 	{
-		pointService.deletePoint(pointId);
-		return "redirect:/points";
+		pointService.delete(pointId);
+		return REDIRECT_PATH + POINTS_PAGE;
 	}
 
 	public void setPointService(PointService pointService)

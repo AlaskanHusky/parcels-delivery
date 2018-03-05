@@ -17,44 +17,65 @@ public class PointDAOImpl implements PointDAO
 		System.out.println("PointDAOImpl Constructor");
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void createPoint(PointEntity point)
+	public void create(PointEntity point)
 	{
 		hibernateUtil.create(point);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void updatePoint(PointEntity point)
+	public void update(PointEntity point)
 	{
 		hibernateUtil.update(point);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void deletePoint(int pointId)
+	public void delete(int pointId)
 	{
 		hibernateUtil.delete(pointId, PointEntity.class);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public List<PointEntity> getAllPoints()
+	public List<PointEntity> getAll()
 	{
 		return hibernateUtil.fetchAll(PointEntity.class);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public PointEntity getPoint(int pointId)
+	public PointEntity getById(int pointId)
 	{
 		return hibernateUtil.fetchById(pointId, PointEntity.class);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public PointEntity getPointByName(String name)
+	public PointEntity getByName(String name)
 	{
 		return hibernateUtil.fetchByAttribute("name", name, PointEntity.class);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public List getPointsNames()
+	public List getNames()
 	{
 		return hibernateUtil.fetchValuesByAttribute("name", PointEntity.class);
 	}

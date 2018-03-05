@@ -6,17 +6,47 @@ import by.parcelsdelivery.entity.PointEntity;
 
 public interface PointService
 {
-	void createPoint(PointEntity point);
+	/**
+	 *
+	 * @param point
+	 */
+	void save(PointEntity point);
 
-	void updatePoint(PointEntity point);
+	/**
+	 *
+	 * @param point
+	 */
+	void update(PointEntity point);
 
-	void deletePoint(int pointId);
+	/**
+	 *
+	 * @param pointId
+	 */
+	void delete(int pointId);
 
-	List<PointEntity> getAllPoints();
+	/**
+	 *
+	 * @return
+	 */
+	List<PointEntity> getAll();
 
-	PointEntity getPoint(int pointId);
+	/**
+	 *
+	 * @param pointId
+	 * @return
+	 */
+	PointEntity getById(int pointId);
 
-	PointEntity getPointByName(String name);
+	/**
+	 *
+	 * @param name
+	 * @return
+	 */
+	PointEntity getByName(String name);
 
-	List getPointsNames();
+	/**
+	 *
+	 * @return
+	 */
+	List getNames();
 }
