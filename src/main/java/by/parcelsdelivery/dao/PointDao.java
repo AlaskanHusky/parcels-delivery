@@ -4,7 +4,7 @@ import java.util.List;
 
 import by.parcelsdelivery.entity.PointEntity;
 
-public interface PointDAO
+public interface PointDao
 {
 	/**
 	 *

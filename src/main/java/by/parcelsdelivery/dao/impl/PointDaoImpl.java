@@ -3,18 +3,18 @@ package by.parcelsdelivery.dao.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import by.parcelsdelivery.dao.PointDAO;
+import by.parcelsdelivery.dao.PointDao;
 import by.parcelsdelivery.entity.PointEntity;
 import by.parcelsdelivery.util.HibernateUtil;
 
 @Repository
-public class PointDAOImpl implements PointDAO
+public class PointDaoImpl implements PointDao
 {
 	private HibernateUtil hibernateUtil;
 
-	public PointDAOImpl()
+	public PointDaoImpl()
 	{
-		System.out.println("PointDAOImpl Constructor");
+		System.out.println("PointDaoImpl Constructor");
 	}
 
 	/**

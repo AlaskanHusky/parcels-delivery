@@ -3,18 +3,18 @@ package by.parcelsdelivery.dao.impl;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
-import by.parcelsdelivery.dao.ParcelDAO;
+import by.parcelsdelivery.dao.ParcelDao;
 import by.parcelsdelivery.entity.ParcelEntity;
 import by.parcelsdelivery.util.HibernateUtil;
 
 @Repository
-public class ParcelDAOImpl implements ParcelDAO
+public class ParcelDaoImpl implements ParcelDao
 {
 	private HibernateUtil hibernateUtil;
 
-	public ParcelDAOImpl()
+	public ParcelDaoImpl()
 	{
-		System.out.println("ParcelDAOImpl Constructor");
+		System.out.println("ParcelDaoImpl Constructor");
 	}
 
 	/**

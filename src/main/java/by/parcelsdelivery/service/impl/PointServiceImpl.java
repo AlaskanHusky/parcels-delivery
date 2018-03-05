@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import by.parcelsdelivery.dao.PointDAO;
+import by.parcelsdelivery.dao.PointDao;
 import by.parcelsdelivery.entity.PointEntity;
 import by.parcelsdelivery.service.PointService;
 
@@ -12,7 +12,7 @@ import by.parcelsdelivery.service.PointService;
 @Transactional
 public class PointServiceImpl implements PointService
 {
-	private PointDAO pointDAO;
+	private PointDao pointDao;
 
 	public PointServiceImpl()
 	{
@@ -25,7 +25,7 @@ public class PointServiceImpl implements PointService
 	@Override
 	public void save(PointEntity point)
 	{
-		pointDAO.create(point);
+		pointDao.create(point);
 	}
 
 	/**
@@ -34,7 +34,7 @@ public class PointServiceImpl implements PointService
 	@Override
 	public void update(PointEntity point)
 	{
-		pointDAO.update(point);
+		pointDao.update(point);
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class PointServiceImpl implements PointService
 	@Override
 	public void delete(int pointId)
 	{
-		pointDAO.delete(pointId);
+		pointDao.delete(pointId);
 	}
 
 	/**
@@ -52,7 +52,7 @@ public class PointServiceImpl implements PointService
 	@Override
 	public List<PointEntity> getAll()
 	{
-		return pointDAO.getAll();
+		return pointDao.getAll();
 	}
 
 	/**
@@ -61,7 +61,7 @@ public class PointServiceImpl implements PointService
 	@Override
 	public PointEntity getById(int pointId)
 	{
-		return pointDAO.getById(pointId);
+		return pointDao.getById(pointId);
 	}
 
 	/**
@@ -70,11 +70,11 @@ public class PointServiceImpl implements PointService
 	@Override
 	public PointEntity getByName(String name)
 	{
-		return pointDAO.getByName(name);
+		return pointDao.getByName(name);
 	}
 
-	public void setPointDAO(PointDAO pointDAO)
+	public void setPointDao(PointDao pointDao)
 	{
-		this.pointDAO = pointDAO;
+		this.pointDao = pointDao;
 	}
 }

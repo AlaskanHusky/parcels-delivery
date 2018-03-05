@@ -66,22 +66,22 @@
 
 	<bean id="pointUtil" class="by.parcelsdelivery.util.PointUtil"/>
 
-	<!-- DAO beans -->
-	<bean id="parcelDAO" class="by.parcelsdelivery.dao.impl.ParcelDAOImpl">
+	<!-- Dao beans -->
+	<bean id="parcelDao" class="by.parcelsdelivery.dao.impl.ParcelDaoImpl">
 		<property name="hibernateUtil" ref="hibernateUtil"/>
 	</bean>
 
-	<bean id="pointDAO" class="by.parcelsdelivery.dao.impl.PointDAOImpl">
+	<bean id="pointDao" class="by.parcelsdelivery.dao.impl.PointDaoImpl">
 		<property name="hibernateUtil" ref="hibernateUtil"/>
 	</bean>
 
 	<!-- Service beans -->
 	<bean id="parcelService" class="by.parcelsdelivery.service.impl.ParcelServiceImpl">
-		<property name="parcelDAO" ref="parcelDAO"/>
+		<property name="parcelDao" ref="parcelDao"/>
 	</bean>
 
 	<bean id="pointService" class="by.parcelsdelivery.service.impl.PointServiceImpl">
-		<property name="pointDAO" ref="pointDAO"/>
+		<property name="pointDao" ref="pointDao"/>
 	</bean>
 
 	<!-- Controller's beans -->

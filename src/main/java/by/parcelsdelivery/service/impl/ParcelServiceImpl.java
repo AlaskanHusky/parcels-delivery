@@ -5,7 +5,7 @@ import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import by.parcelsdelivery.dao.ParcelDAO;
+import by.parcelsdelivery.dao.ParcelDao;
 import by.parcelsdelivery.entity.ParcelEntity;
 import by.parcelsdelivery.service.ParcelService;
 
@@ -13,7 +13,7 @@ import by.parcelsdelivery.service.ParcelService;
 @Transactional
 public class ParcelServiceImpl implements ParcelService
 {
-	private ParcelDAO parcelDAO;
+	private ParcelDao parcelDao;
 
 	public ParcelServiceImpl()
 	{
@@ -27,7 +27,7 @@ public class ParcelServiceImpl implements ParcelService
 	public void create(ParcelEntity parcel)
 	{
 		parcel.setUuid(UUID.randomUUID().toString());
-		parcelDAO.save(parcel);
+		parcelDao.save(parcel);
 	}
 
 	/**
@@ -37,7 +37,7 @@ public class ParcelServiceImpl implements ParcelService
 	public void save(ParcelEntity parcel)
 	{
 		parcel.setStatus(ParcelEntity.STATUS_TRANSIT);
-		parcelDAO.save(parcel);
+		parcelDao.save(parcel);
 	}
 
 	/**
@@ -46,7 +46,7 @@ public class ParcelServiceImpl implements ParcelService
 	@Override
 	public void update(ParcelEntity parcel)
 	{
-		parcelDAO.update(parcel);
+		parcelDao.update(parcel);
 	}
 
 	/**
@@ -55,7 +55,7 @@ public class ParcelServiceImpl implements ParcelService
 	@Override
 	public void delete(int parcelId)
 	{
-		parcelDAO.delete(parcelId);
+		parcelDao.delete(parcelId);
 	}
 
 	/**
@@ -64,7 +64,7 @@ public class ParcelServiceImpl implements ParcelService
 	@Override
 	public List<ParcelEntity> getAll()
 	{
-		return parcelDAO.getAll();
+		return parcelDao.getAll();
 	}
 
 	/**
@@ -73,7 +73,7 @@ public class ParcelServiceImpl implements ParcelService
 	@Override
 	public ParcelEntity getById(int parcelId)
 	{
-		return parcelDAO.getById(parcelId);
+		return parcelDao.getById(parcelId);
 	}
 
 	/**
@@ -82,11 +82,11 @@ public class ParcelServiceImpl implements ParcelService
 	@Override
 	public ParcelEntity getByUUID(String uuid)
 	{
-		return parcelDAO.getByUUID(uuid);
+		return parcelDao.getByUUID(uuid);
 	}
 
-	public void setParcelDAO(ParcelDAO parcelDAO)
+	public void setParcelDao(ParcelDao parcelDao)
 	{
-		this.parcelDAO = parcelDAO;
+		this.parcelDao = parcelDao;
 	}
 }

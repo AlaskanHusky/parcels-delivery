@@ -4,7 +4,7 @@ import java.util.List;
 
 import by.parcelsdelivery.entity.ParcelEntity;
 
-public interface ParcelDAO
+public interface ParcelDao
 {
 	/**
 	 *
