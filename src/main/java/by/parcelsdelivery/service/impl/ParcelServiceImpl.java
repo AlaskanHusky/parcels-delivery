@@ -1,13 +1,12 @@
 package by.parcelsdelivery.service.impl;
 
-import by.parcelsdelivery.dao.ParcelDAO;
-import by.parcelsdelivery.entity.ParcelEntity;
-import by.parcelsdelivery.service.ParcelService;
-
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import by.parcelsdelivery.dao.ParcelDAO;
+import by.parcelsdelivery.entity.ParcelEntity;
+import by.parcelsdelivery.service.ParcelService;
 
 @Service
 @Transactional

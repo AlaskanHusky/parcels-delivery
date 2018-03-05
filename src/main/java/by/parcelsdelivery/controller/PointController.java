@@ -1,14 +1,13 @@
 package by.parcelsdelivery.controller;
 
-import by.parcelsdelivery.entity.PointEntity;
-import by.parcelsdelivery.service.PointService;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import by.parcelsdelivery.entity.PointEntity;
+import by.parcelsdelivery.service.PointService;
 
 /**
  * Класс для обработки запросов связанных с операциями CRUD для узла {@link PointEntity}

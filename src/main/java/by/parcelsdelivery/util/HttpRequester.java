@@ -1,8 +1,11 @@
 package by.parcelsdelivery.util;
 
-import by.parcelsdelivery.entity.ParcelEntity;
-
-import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
@@ -16,12 +19,9 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import com.google.gson.Gson;
+
+import by.parcelsdelivery.entity.ParcelEntity;
 
 /**
  * Класс для отправки http-запросов на другие узлы.

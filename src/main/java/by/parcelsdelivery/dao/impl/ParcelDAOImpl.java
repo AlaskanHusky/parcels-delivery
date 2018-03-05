@@ -1,12 +1,11 @@
 package by.parcelsdelivery.dao.impl;
 
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
 import by.parcelsdelivery.dao.ParcelDAO;
 import by.parcelsdelivery.entity.ParcelEntity;
 import by.parcelsdelivery.util.HibernateUtil;
-
-import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class ParcelDAOImpl implements ParcelDAO

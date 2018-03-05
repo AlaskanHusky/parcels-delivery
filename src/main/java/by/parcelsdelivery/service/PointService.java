@@ -1,8 +1,8 @@
 package by.parcelsdelivery.service;
 
-import by.parcelsdelivery.entity.PointEntity;
-
 import java.util.List;
+
+import by.parcelsdelivery.entity.PointEntity;
 
 public interface PointService
 {

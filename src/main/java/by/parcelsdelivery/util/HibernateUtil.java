@@ -1,9 +1,9 @@
 package by.parcelsdelivery.util;
 
+import java.util.List;
+
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
-
-import java.util.List;
 
 @Repository
 public class HibernateUtil
