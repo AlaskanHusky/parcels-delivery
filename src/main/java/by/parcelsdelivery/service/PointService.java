@@ -43,10 +43,4 @@ public interface PointService
 	 * @return
 	 */
 	PointEntity getByName(String name);
-
-	/**
-	 *
-	 * @return
-	 */
-	List getNames();
 }

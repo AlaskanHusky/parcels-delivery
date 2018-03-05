@@ -43,10 +43,4 @@ public interface PointDAO
 	 * @return
 	 */
 	PointEntity getByName(String name);
-
-	/**
-	 *
-	 * @return
-	 */
-	List getNames();
 }

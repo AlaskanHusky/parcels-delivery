@@ -71,15 +71,6 @@ public class PointDAOImpl implements PointDAO
 		return hibernateUtil.fetchByAttribute("name", name, PointEntity.class);
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	@Override
-	public List getNames()
-	{
-		return hibernateUtil.fetchValuesByAttribute("name", PointEntity.class);
-	}
-
 	public void setHibernateUtil(HibernateUtil hibernateUtil)
 	{
 		this.hibernateUtil = hibernateUtil;

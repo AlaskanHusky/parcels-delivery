@@ -73,15 +73,6 @@ public class PointServiceImpl implements PointService
 		return pointDAO.getByName(name);
 	}
 
-	/**
-	 * @inheritDoc
-	 */
-	@Override
-	public List getNames()
-	{
-		return pointDAO.getNames();
-	}
-
 	public void setPointDAO(PointDAO pointDAO)
 	{
 		this.pointDAO = pointDAO;
