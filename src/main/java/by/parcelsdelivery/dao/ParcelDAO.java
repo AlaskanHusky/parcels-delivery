@@ -6,15 +6,41 @@ import by.parcelsdelivery.entity.ParcelEntity;
 
 public interface ParcelDAO
 {
-	void createParcel(ParcelEntity parcel);
+	/**
+	 *
+	 * @param parcel
+	 */
+	void save(ParcelEntity parcel);
 
-	void updateParcel(ParcelEntity parcel);
+	/**
+	 *
+	 * @param parcel
+	 */
+	void update(ParcelEntity parcel);
 
-	void deleteParcel(int parcelId);
+	/**
+	 *
+	 * @param parcelId
+	 */
+	void delete(int parcelId);
 
-	List<ParcelEntity> getAllParcels();
+	/**
+	 *
+	 * @return
+	 */
+	List<ParcelEntity> getAll();
 
-	ParcelEntity getParcel(int parcelId);
+	/**
+	 *
+	 * @param parcelId
+	 * @return
+	 */
+	ParcelEntity getById(int parcelId);
 
-	ParcelEntity getParcelByUUID(String uuid);
+	/**
+	 *
+	 * @param uuid
+	 * @return
+	 */
+	ParcelEntity getByUUID(String uuid);
 }

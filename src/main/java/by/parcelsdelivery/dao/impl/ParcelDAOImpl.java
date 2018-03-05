@@ -17,38 +17,56 @@ public class ParcelDAOImpl implements ParcelDAO
 		System.out.println("ParcelDAOImpl Constructor");
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void createParcel(ParcelEntity parcel)
+	public void save(ParcelEntity parcel)
 	{
 		hibernateUtil.create(parcel);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void updateParcel(ParcelEntity parcel)
+	public void update(ParcelEntity parcel)
 	{
 		hibernateUtil.update(parcel);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void deleteParcel(int id)
+	public void delete(int id)
 	{
 		hibernateUtil.delete(id, ParcelEntity.class);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public List<ParcelEntity> getAllParcels()
+	public List<ParcelEntity> getAll()
 	{
 		return hibernateUtil.fetchAll(ParcelEntity.class);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public ParcelEntity getParcel(int parcelId)
+	public ParcelEntity getById(int parcelId)
 	{
 		return hibernateUtil.fetchById(parcelId, ParcelEntity.class);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public ParcelEntity getParcelByUUID(String uuid)
+	public ParcelEntity getByUUID(String uuid)
 	{
 		return hibernateUtil.fetchByAttribute("uuid", uuid, ParcelEntity.class);
 	}

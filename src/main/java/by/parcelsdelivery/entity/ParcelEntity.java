@@ -11,6 +11,9 @@ import javax.persistence.Table;
 @Table(name = "parcel")
 public class ParcelEntity
 {
+	public static final String STATUS_TRANSIT = "Transit";
+	public static final String STATUS_ON_NEXT_POINT = "On Next Point";
+	public static final String STATUS_DELIVERED = "Delivered";
 	private int id;
 	private String sender;
 	private String message;

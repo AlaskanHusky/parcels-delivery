@@ -6,15 +6,47 @@ import by.parcelsdelivery.entity.ParcelEntity;
 
 public interface ParcelService
 {
-	void createParcel(ParcelEntity parcel);
+	/**
+	 *
+	 * @param parcel
+	 */
+	void create(ParcelEntity parcel);
 
-	void updateParcel(ParcelEntity parcel);
+	/**
+	 *
+	 * @param parcel
+	 */
+	void save(ParcelEntity parcel);
 
-	void deleteParcel(int parcelId);
+	/**
+	 *
+	 * @param parcel
+	 */
+	void update(ParcelEntity parcel);
 
-	List<ParcelEntity> getAllParcels();
+	/**
+	 *
+	 * @param parcelId
+	 */
+	void delete(int parcelId);
 
-	ParcelEntity getParcel(int parcelId);
+	/**
+	 *
+	 * @return
+	 */
+	List<ParcelEntity> getAll();
 
-	ParcelEntity getParcelByUUID(String uuid);
+	/**
+	 *
+	 * @param parcelId
+	 * @return
+	 */
+	ParcelEntity getById(int parcelId);
+
+	/**
+	 *
+	 * @param uuid
+	 * @return
+	 */
+	ParcelEntity getByUUID(String uuid);
 }

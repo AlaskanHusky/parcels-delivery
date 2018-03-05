@@ -9,6 +9,8 @@ import by.parcelsdelivery.service.PointService;
  */
 public class ParcelSender
 {
+	private static final String PARCELS_RECEIVE_PATH = "/parcels/receive";
+	private static final String PARCELS_DELIVERED_PATH = "/parcels/delivered";
 	private HttpRequester httpRequester;
 	private ParcelService parcelService;
 	private PointService pointService;
@@ -47,13 +49,12 @@ public class ParcelSender
 	 */
 	public void sendParcel(ParcelEntity parcelEntity)
 	{
-		String parcelPath = parcelEntity.getPath();
-		String nextPointName = pointUtil.getNextPointName(parcelPath);
+		String nextPointName = pointUtil.getNextPointName(parcelEntity.getPath());
 		String nextPointAddress = pointService.getPointByName(nextPointName).getUri();
 		httpRequester.repeatRequest(nextPointAddress);
-		parcelEntity.setStatus("On Next Point");
-		parcelService.updateParcel(parcelEntity);
-		httpRequester.doPost(nextPointAddress + "/parcels/receive", parcelEntity);
+		parcelEntity.setStatus(ParcelEntity.STATUS_ON_NEXT_POINT);
+		parcelService.update(parcelEntity);
+		httpRequester.doPost(nextPointAddress + PARCELS_RECEIVE_PATH, parcelEntity);
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class ParcelSender
 	 */
 	public void updateStatusCallback(String uuid)
 	{
-		updateStatusCallback(parcelService.getParcelByUUID(UUIDUtil.getUUID(uuid)));
+		updateStatusCallback(parcelService.getByUUID(UUIDUtil.getUUID(uuid)));
 	}
 
 	/**
@@ -78,8 +79,8 @@ public class ParcelSender
 	 */
 	private void updateStatusCallback(ParcelEntity parcelEntity)
 	{
-		parcelEntity.setStatus("Delivered");
-		parcelService.updateParcel(parcelEntity);
+		parcelEntity.setStatus(ParcelEntity.STATUS_DELIVERED);
+		parcelService.update(parcelEntity);
 		String parcelPath = parcelEntity.getPath();
 		if (pointUtil.getPointIndex(parcelPath) == 0)
 		{
@@ -88,7 +89,7 @@ public class ParcelSender
 		String previousPointName = pointUtil.getPreviousPointName(parcelPath);
 		String previousPointAddress = pointService.getPointByName(previousPointName).getUri();
 		httpRequester.repeatRequest(previousPointAddress);
-		httpRequester.doPost(previousPointAddress + "/parcels/delivered", parcelEntity.getUuid());
+		httpRequester.doPost(previousPointAddress + PARCELS_DELIVERED_PATH, parcelEntity.getUuid());
 	}
 
 	public void setParcelService(ParcelService parcelService)

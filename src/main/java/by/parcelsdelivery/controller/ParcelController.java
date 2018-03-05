@@ -4,10 +4,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import by.parcelsdelivery.entity.ParcelEntity;
 import by.parcelsdelivery.service.ParcelService;
+import by.parcelsdelivery.util.ParcelSender;
 
 /**
  * Класс для обработки запросов связанных с операциями CRUD для посылки {@link ParcelEntity}
@@ -15,7 +17,11 @@ import by.parcelsdelivery.service.ParcelService;
 @Controller
 public class ParcelController
 {
+	private static final String PARCEL_ATTRIBUTE = "parcel";
+	private static final String PARCELS_PAGE = "parcels";
+	private static final String REDIRECT_PATH = "redirect:/";
 	private ParcelService parcelService;
+	private ParcelSender parcelSender;
 
 	public ParcelController()
 	{
@@ -32,9 +38,9 @@ public class ParcelController
 	@RequestMapping(value = "/parcels", method = RequestMethod.GET)
 	public String getParcels(Model model)
 	{
-		model.addAttribute("parcel", new ParcelEntity());
-		model.addAttribute("listOfParcels", parcelService.getAllParcels());
-		return "parcels";
+		model.addAttribute(PARCEL_ATTRIBUTE, new ParcelEntity());
+		model.addAttribute("listOfParcels", parcelService.getAll());
+		return PARCELS_PAGE;
 	}
 
 	/**
@@ -45,17 +51,17 @@ public class ParcelController
 	 * @return перенаправление на страницу с посылками
 	 */
 	@RequestMapping(value = "/parcels/add", method = RequestMethod.POST)
-	public String addParcel(@ModelAttribute("parcel") ParcelEntity parcelEntity)
+	public String addParcel(@ModelAttribute(PARCEL_ATTRIBUTE) ParcelEntity parcelEntity)
 	{
 		if (parcelEntity.getId() == 0)
 		{
-			parcelService.createParcel(parcelEntity);
+			parcelService.create(parcelEntity);
 		}
 		else
 		{
-			parcelService.updateParcel(parcelEntity);
+			parcelService.update(parcelEntity);
 		}
-		return "redirect:/parcels";
+		return REDIRECT_PATH + PARCELS_PAGE;
 	}
 
 	/**
@@ -69,9 +75,9 @@ public class ParcelController
 	@RequestMapping(value = "/parcels/{id}/update", method = RequestMethod.GET)
 	public String updateParcel(@PathVariable("id") int parcelId, Model model)
 	{
-		model.addAttribute("parcel", parcelService.getParcel(parcelId));
-		model.addAttribute("listOfParcels", parcelService.getAllParcels());
-		return "parcels";
+		model.addAttribute(PARCEL_ATTRIBUTE, parcelService.getById(parcelId));
+		model.addAttribute("listOfParcels", parcelService.getAll());
+		return PARCELS_PAGE;
 	}
 
 	/**
@@ -81,14 +87,69 @@ public class ParcelController
 	 * @return перенаправление на страницу с посылками
 	 */
 	@RequestMapping(value = "/parcels/{id}/delete", method = RequestMethod.GET)
-	public String deletePoint(@PathVariable("id") int parcelId)
+	public String deleteParcel(@PathVariable("id") int parcelId)
 	{
-		parcelService.deleteParcel(parcelId);
-		return "redirect:/parcels";
+		parcelService.delete(parcelId);
+		return REDIRECT_PATH + PARCELS_PAGE;
+	}
+
+	/**
+	 * Обрабатывает запрос с формы для отправки посылки. Заполняет поля посылки данными с формы. Сохраняет посылку в базе данных.
+	 * Перед сохранением, для посылки генерируется уникальный UUID. После этого отправляет на следующую точку в пути посылки.
+	 * @param parcelEntity
+	 *            объект класса {@link ParcelEntity}
+	 * @return перенаправление на главную страницу
+	 * @see ParcelSender
+	 */
+	@RequestMapping(value = "/parcels/send", method = RequestMethod.POST)
+	public String sendParcel(@ModelAttribute(PARCEL_ATTRIBUTE) ParcelEntity parcelEntity)
+	{
+		parcelService.create(parcelEntity);
+		parcelSender.sendParcel(parcelEntity);
+		return REDIRECT_PATH;
+	}
+
+	/**
+	 * Обрабатывает запрос от другой почтовой точки с посылкой в теле запроса Устанавливает ей статус "Transit", так как посылка
+	 * приходит со статусом "On Next Point". Если почтовая точка последняя в пути, то вызывается функция обратного вызова
+	 * {@link ParcelSender#updateStatusCallback(ParcelEntity)} изменения статуса посылки на предыдущих точках. Если точка не
+	 * последняя, то посылка передаётся следующей по очереди с помощью вызова функции
+	 * {@link ParcelSender#sendParcel(ParcelEntity)}.
+	 * @param parcelEntity
+	 *            объект класса {@link ParcelEntity}
+	 * @return перенаправление на главную страницу
+	 * @see ParcelSender
+	 */
+	@RequestMapping(value = "/parcels/receive", method = RequestMethod.POST)
+	public String receiveParcel(@RequestBody ParcelEntity parcelEntity)
+	{
+		parcelService.save(parcelEntity);
+		parcelSender.handleParcel(parcelEntity);
+		return REDIRECT_PATH;
+	}
+
+	/**
+	 * Обрабатывает запрос от другой почтовой точки с UUID посылки в теле запроса. Вызывает функцию
+	 * {@link ParcelSender#updateStatusCallback(ParcelEntity)} на изменение статуса посылки.
+	 * @param uuid
+	 *            уникальный идентификатор посылки {@link ParcelEntity#uuid}
+	 * @return перенаправление на главную страницу
+	 * @see ParcelSender
+	 */
+	@RequestMapping(value = "/parcels/delivered", method = RequestMethod.POST)
+	public String updateParcelStatus(@RequestBody String uuid)
+	{
+		parcelSender.updateStatusCallback(uuid);
+		return REDIRECT_PATH;
 	}
 
 	public void setParcelService(ParcelService parcelService)
 	{
 		this.parcelService = parcelService;
+	}
+
+	public void setParcelSender(ParcelSender parcelSender)
+	{
+		this.parcelSender = parcelSender;
 	}
 }

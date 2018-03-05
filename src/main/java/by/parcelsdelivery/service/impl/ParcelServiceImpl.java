@@ -1,6 +1,7 @@
 package by.parcelsdelivery.service.impl;
 
 import java.util.List;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,40 +20,69 @@ public class ParcelServiceImpl implements ParcelService
 		System.out.println("ParcelServiceImpl Constructor");
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void createParcel(ParcelEntity parcel)
+	public void create(ParcelEntity parcel)
 	{
-		parcelDAO.createParcel(parcel);
+		parcel.setUuid(UUID.randomUUID().toString());
+		parcelDAO.save(parcel);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void updateParcel(ParcelEntity parcel)
+	public void save(ParcelEntity parcel)
 	{
-		parcelDAO.updateParcel(parcel);
+		parcel.setStatus(ParcelEntity.STATUS_TRANSIT);
+		parcelDAO.save(parcel);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public void deleteParcel(int parcelId)
+	public void update(ParcelEntity parcel)
 	{
-		parcelDAO.deleteParcel(parcelId);
+		parcelDAO.update(parcel);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public List<ParcelEntity> getAllParcels()
+	public void delete(int parcelId)
 	{
-		return parcelDAO.getAllParcels();
+		parcelDAO.delete(parcelId);
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public ParcelEntity getParcel(int parcelId)
+	public List<ParcelEntity> getAll()
 	{
-		return parcelDAO.getParcel(parcelId);
+		return parcelDAO.getAll();
 	}
 
+	/**
+	 * @inheritDoc
+	 */
 	@Override
-	public ParcelEntity getParcelByUUID(String uuid)
+	public ParcelEntity getById(int parcelId)
 	{
-		return parcelDAO.getParcelByUUID(uuid);
+		return parcelDAO.getById(parcelId);
+	}
+
+	/**
+	 * @inheritDoc
+	 */
+	@Override
+	public ParcelEntity getByUUID(String uuid)
+	{
+		return parcelDAO.getByUUID(uuid);
 	}
 
 	public void setParcelDAO(ParcelDAO parcelDAO)
