@@ -91,10 +91,6 @@
 
 	<bean id="parcelController" class="by.parcelsdelivery.controller.ParcelController">
 		<property name="parcelService" ref="parcelService"/>
-	</bean>
-
-	<bean id="mainController" class="by.parcelsdelivery.controller.MainController">
-		<property name="parcelService" ref="parcelService"/>
 		<property name="parcelSender" ref="parcelSender"/>
 	</bean>
 
