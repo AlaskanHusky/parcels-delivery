@@ -4,14 +4,19 @@ import by.parcelsdelivery.entity.PointEntity;
 
 import java.util.List;
 
-public interface PointService {
+public interface PointService
+{
+	void createPoint(PointEntity point);
 
-    void createPoint(PointEntity point);
-    void updatePoint(PointEntity point);
-    void deletePoint(int pointId);
-    List<PointEntity> getAllPoints();
-    PointEntity getPoint(int pointId);
-    PointEntity getPointByName(String name);
-    List getPointsNames();
+	void updatePoint(PointEntity point);
 
+	void deletePoint(int pointId);
+
+	List<PointEntity> getAllPoints();
+
+	PointEntity getPoint(int pointId);
+
+	PointEntity getPointByName(String name);
+
+	List getPointsNames();
 }

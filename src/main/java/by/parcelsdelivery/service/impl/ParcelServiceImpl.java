@@ -11,46 +11,53 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-public class ParcelServiceImpl implements ParcelService {
+public class ParcelServiceImpl implements ParcelService
+{
+	private ParcelDAO parcelDAO;
 
-    private ParcelDAO parcelDAO;
+	public ParcelServiceImpl()
+	{
+		System.out.println("ParcelServiceImpl Constructor");
+	}
 
-    public ParcelServiceImpl() {
-        System.out.println("ParcelServiceImpl Constructor");
-    }
+	@Override
+	public void createParcel(ParcelEntity parcel)
+	{
+		parcelDAO.createParcel(parcel);
+	}
 
-    @Override
-    public void createParcel(ParcelEntity parcel) {
-        parcelDAO.createParcel(parcel);
-    }
+	@Override
+	public void updateParcel(ParcelEntity parcel)
+	{
+		parcelDAO.updateParcel(parcel);
+	}
 
-    @Override
-    public void updateParcel(ParcelEntity parcel) {
-        parcelDAO.updateParcel(parcel);
-    }
+	@Override
+	public void deleteParcel(int parcelId)
+	{
+		parcelDAO.deleteParcel(parcelId);
+	}
 
-    @Override
-    public void deleteParcel(int parcelId) {
-        parcelDAO.deleteParcel(parcelId);
-    }
+	@Override
+	public List<ParcelEntity> getAllParcels()
+	{
+		return parcelDAO.getAllParcels();
+	}
 
-    @Override
-    public List<ParcelEntity> getAllParcels() {
-        return parcelDAO.getAllParcels();
-    }
+	@Override
+	public ParcelEntity getParcel(int parcelId)
+	{
+		return parcelDAO.getParcel(parcelId);
+	}
 
-    @Override
-    public ParcelEntity getParcel(int parcelId) {
-        return parcelDAO.getParcel(parcelId);
-    }
+	@Override
+	public ParcelEntity getParcelByUUID(String uuid)
+	{
+		return parcelDAO.getParcelByUUID(uuid);
+	}
 
-    @Override
-    public ParcelEntity getParcelByUUID(String uuid) {
-        return parcelDAO.getParcelByUUID(uuid);
-    }
-
-    public void setParcelDAO(ParcelDAO parcelDAO) {
-        this.parcelDAO = parcelDAO;
-    }
-
+	public void setParcelDAO(ParcelDAO parcelDAO)
+	{
+		this.parcelDAO = parcelDAO;
+	}
 }

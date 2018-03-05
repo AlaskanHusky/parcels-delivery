@@ -1,101 +1,101 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:mvc="http://www.springframework.org/schema/mvc"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns="http://www.springframework.org/schema/beans"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	   xmlns:mvc="http://www.springframework.org/schema/mvc"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:tx="http://www.springframework.org/schema/tx"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-    <!-- Specifying base package of the Components like @Controller, @Repository, @Service, @Component -->
-    <context:component-scan base-package="by.parcelsdelivery"/>
+	<!-- Specifying base package of the Components like @Controller, @Repository, @Service, @Component -->
+	<context:component-scan base-package="by.parcelsdelivery"/>
 
-    <!-- Getting Database properties -->
-    <context:property-placeholder location="classpath:database.properties"/>
+	<!-- Getting Database properties -->
+	<context:property-placeholder location="classpath:database.properties"/>
 
-    <!-- Specifying the Resource location to load JS, CSS, Images etc -->
-    <mvc:resources mapping="/resources/**" location="/resources/"/>
+	<!-- Specifying the Resource location to load JS, CSS, Images etc -->
+	<mvc:resources mapping="/resources/**" location="/resources/"/>
 
-    <!-- Enables the Spring MVC @Controller programming entity -->
-    <mvc:annotation-driven/>
+	<!-- Enables the Spring MVC @Controller programming entity -->
+	<mvc:annotation-driven/>
 
-    <!-- View Resolver -->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/views/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+	<!-- View Resolver -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
 
-    <!-- Data Source -->
-    <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="${database.driver}"/>
-        <property name="url" value="${database.url}"/>
-        <property name="username" value="${database.user}"/>
-        <property name="password" value="${database.password}"/>
-    </bean>
+	<!-- Data Source -->
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
+		<property name="driverClassName" value="${database.driver}"/>
+		<property name="url" value="${database.url}"/>
+		<property name="username" value="${database.user}"/>
+		<property name="password" value="${database.password}"/>
+	</bean>
 
-    <!-- Hibernate SessionFactory -->
-    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="configLocation" value="classpath:hibernate.cfg.xml"/>
-        <property name="packagesToScan" value="by.parcelsdelivery.entity"/>
-    </bean>
+	<!-- Hibernate SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSource"/>
+		<property name="configLocation" value="classpath:hibernate.cfg.xml"/>
+		<property name="packagesToScan" value="by.parcelsdelivery.entity"/>
+	</bean>
 
-    <!-- Transaction -->
-    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+	<!-- Transaction -->
+	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 
-    <!-- Enable the configuration of transactional behavior based on annotations -->
-    <tx:annotation-driven/>
+	<!-- Enable the configuration of transactional behavior based on annotations -->
+	<tx:annotation-driven/>
 
-    <!-- Utilities beans -->
-    <bean id="hibernateUtil" class="by.parcelsdelivery.util.HibernateUtil">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
+	<!-- Utilities beans -->
+	<bean id="hibernateUtil" class="by.parcelsdelivery.util.HibernateUtil">
+		<property name="sessionFactory" ref="sessionFactory"/>
+	</bean>
 
-    <bean id="httpRequester" class="by.parcelsdelivery.util.HttpRequester" />
+	<bean id="httpRequester" class="by.parcelsdelivery.util.HttpRequester"/>
 
-    <bean id="parcelSender" class="by.parcelsdelivery.util.ParcelSender">
-        <property name="httpRequester" ref="httpRequester"/>
-        <property name="pointService" ref="pointService"/>
-        <property name="parcelService" ref="parcelService"/>
-        <property name="pointUtil" ref="pointUtil" />
-    </bean>
+	<bean id="parcelSender" class="by.parcelsdelivery.util.ParcelSender">
+		<property name="httpRequester" ref="httpRequester"/>
+		<property name="pointService" ref="pointService"/>
+		<property name="parcelService" ref="parcelService"/>
+		<property name="pointUtil" ref="pointUtil"/>
+	</bean>
 
-    <bean id="pointUtil" class="by.parcelsdelivery.util.PointUtil" />
+	<bean id="pointUtil" class="by.parcelsdelivery.util.PointUtil"/>
 
-    <!-- DAO beans -->
-    <bean id="parcelDAO" class="by.parcelsdelivery.dao.impl.ParcelDAOImpl">
-        <property name="hibernateUtil" ref="hibernateUtil"/>
-    </bean>
+	<!-- DAO beans -->
+	<bean id="parcelDAO" class="by.parcelsdelivery.dao.impl.ParcelDAOImpl">
+		<property name="hibernateUtil" ref="hibernateUtil"/>
+	</bean>
 
-    <bean id="pointDAO" class="by.parcelsdelivery.dao.impl.PointDAOImpl">
-        <property name="hibernateUtil" ref="hibernateUtil"/>
-    </bean>
+	<bean id="pointDAO" class="by.parcelsdelivery.dao.impl.PointDAOImpl">
+		<property name="hibernateUtil" ref="hibernateUtil"/>
+	</bean>
 
-    <!-- Service beans -->
-    <bean id="parcelService" class="by.parcelsdelivery.service.impl.ParcelServiceImpl">
-        <property name="parcelDAO" ref="parcelDAO"/>
-    </bean>
+	<!-- Service beans -->
+	<bean id="parcelService" class="by.parcelsdelivery.service.impl.ParcelServiceImpl">
+		<property name="parcelDAO" ref="parcelDAO"/>
+	</bean>
 
-    <bean id="pointService" class="by.parcelsdelivery.service.impl.PointServiceImpl">
-        <property name="pointDAO" ref="pointDAO"/>
-    </bean>
+	<bean id="pointService" class="by.parcelsdelivery.service.impl.PointServiceImpl">
+		<property name="pointDAO" ref="pointDAO"/>
+	</bean>
 
-    <!-- Controller's beans -->
-    <bean id="pointController" class="by.parcelsdelivery.controller.PointController">
-        <property name="pointService" ref="pointService"/>
-    </bean>
+	<!-- Controller's beans -->
+	<bean id="pointController" class="by.parcelsdelivery.controller.PointController">
+		<property name="pointService" ref="pointService"/>
+	</bean>
 
-    <bean id="parcelController" class="by.parcelsdelivery.controller.ParcelController">
-        <property name="parcelService" ref="parcelService"/>
-    </bean>
+	<bean id="parcelController" class="by.parcelsdelivery.controller.ParcelController">
+		<property name="parcelService" ref="parcelService"/>
+	</bean>
 
-    <bean id="mainController" class="by.parcelsdelivery.controller.MainController">
-        <property name="parcelService" ref="parcelService"/>
-        <property name="parcelSender" ref="parcelSender"/>
-    </bean>
+	<bean id="mainController" class="by.parcelsdelivery.controller.MainController">
+		<property name="parcelService" ref="parcelService"/>
+		<property name="parcelSender" ref="parcelSender"/>
+	</bean>
 
 </beans>
